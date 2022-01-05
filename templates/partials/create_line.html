@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+   
+
+<style>
+.bill-table{
+   border: none; 
+   color: #d6d8d9;
+}
+#appendformhere tr{
+    background: #d6d8d9;
+    color: #343a40;
+    font-size: 15px;
+    font-weight: 600;
+}
+btn{
+  background: #737373;
+}
+
+</style>
+
+<div style="direction: rtl;" class="wrapper">
+    <div   class="content-wrapper p-5">
+          <section class="content">                  
+            <div class="card card-solid">
+                <div class="row d-flex align-items-stretch">
+                  <div   class="col-12 p-3">
+                     
+                    <h5>فاتوره باسم:  {{order.client}}</h5>
+                    <h6>رقم الفاتوره:  {{order.transaction_id}}</h6>
+                    <h6>رقم الهاتف:  {{order.client.phone}}</h6>
+                    <h6 class="mb-5">التاريخ:  {{order.date_ordered}}</h6>
+                    
+       
+
+
+
+
+
+
+  
+
+  
+                    
+                    <table class="table bill-table text-center">
+                      
+                        <thead>
+                          <tr>
+                            <th scope="col"></th> 
+                            <th scope="col">المنتج </th>
+                            <th scope="col">الكميه</th> 
+                            <th scope="col">المجموع الفرعي</th>
+                            <th scope="col"></th> 
+                          </tr>
+                        </thead>
+                        
+                        <tbody id="appendformhere">
+     
+                                {% for line in lines %}
+                                  {% include "partials/line_detail.html" %}
+                                {% endfor %}
+                          
+                        </tbody>
+                    </table>
+                    
+                    <!-- <div id=""></div> -->
+
+                    <button class="btn btn-info mt-5 w-100" hx-get="{% url 'products:line-form' %}" hx-swap="beforeend" hx-target="#appendformhere">
+                      اضف منتج الى الفاتوره
+                    </button>
+
+
+
+
+
+                  </div>
+                  </div>
+            </div>
+          </section>
+        </div>
+    </div>
+{% endblock %}
+    

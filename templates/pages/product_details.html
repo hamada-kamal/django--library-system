@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  
+    <div style="direction: rtl;" class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div   class="content-wrapper p-5">
+        <!-- Content Header (Page header) -->
+
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <h3>{{product}}</h3>
+                  </div>
+   
+                </div>
+            </section>
+        
+            <!-- Main content -->
+            <section class="content">                  
+              <!-- Default box -->
+              <div class="card card-solid">
+                  <div class="row d-flex align-items-stretch">
+
+          
+                    <!-- بداية  -->
+                    <div   class="col-12 p-3">
+                        <h4>التفاصيل</h4>
+                        <table class="table table-info table-details">
+                            
+                            <tbody>
+                                
+                                {% if product.discription %}
+                                    <tr>
+                                    <th scope="row">الوصف</th>
+                                    <td>{{product.discription}}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                    <th scope="row">الوصف</th>
+                                    <td> لا يوجد وصف حتى الان</td>
+                                    </tr>
+                                {% endif %}
+                                    
+                              
+                              <tr>
+                                <th scope="row">السعر</th>
+                                <td>{{product.price}} جنيه</td>
+                                
+                               
+                              </tr>
+                              <tr>
+                                <th scope="row">سعر الجمله</th>
+                                <td>{{product.wholesale_price}} جنيه</td>
+                                
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">متوفر في المخزون</th>
+                                <td>{{product.available_in_ventory}} قطع</td>
+                               
+                                
+                              </tr>
+                           
+                            </tbody>
+                          </table>
+                    </div>
+                     <!-- نهاية  -->
+                  
+                    </div>
+                
+                  <div class="row d-flex align-items-stretch">
+
+          
+                    <!-- بداية  -->
+                    <div   class="col-12 p-3">
+                        <h4>احصائيات</h4>
+                        <table class="table table-info table-details">
+                            
+                            <tbody>
+                                 <tr>
+                                <th scope="row">تم بيع</th>
+                                <td>{{product.count_sold}} قطع</td>
+                                
+                                
+                              </tr>
+
+                              <tr>
+                                <th scope="row">تم الانشاء فى</th>
+                                <td>{{product.created_at}}</td>
+                                
+                               
+                              </tr>
+                              
+                              
+                           
+                            </tbody>
+                          </table>
+                    </div>
+                     <!-- نهاية  -->
+                  
+                    </div>
+                
+                  <div class="row d-flex align-items-stretch">
+
+          
+
+                    <div   class="col-12 p-3">
+                        <a href="{% url 'products:edit_product' product.PROslug %}" class="btn btn-info">تعديل المنتج</a>
+                        <a href="#" class="btn btn-danger delete_btn">حذف المنتج</a>
+                    </div>
+
+                  
+                    </div>
+                
+  
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+        
+            </section>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+  
+{% endblock %}

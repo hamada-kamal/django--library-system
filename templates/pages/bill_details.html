@@ -1,0 +1,115 @@
+
+
+
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+  
+
+    <div style="direction: rtl;" class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div   class="content-wrapper p-5">
+        <!-- Content Header (Page header) -->
+
+
+            <!-- Main content -->
+            <section class="content">                  
+              <!-- Default box -->
+              <div class="card card-solid">
+                  <div class="row d-flex align-items-stretch">
+
+          
+                    <!-- بداية  -->
+                    <div   class="col-12 p-3">
+                        <h3>فاتوره:   {{bill.client}} </h3>
+                        <h5>رقم الفاتوره:  {{bill.transaction_id}} </h5>
+                        <hr>
+                        <hr>
+                        <hr>
+                        {% comment %} <table class="table table-bordered text-center">
+                            <thead>
+                              <tr>
+                                <th scope="col">المنتج </th>
+                                <th scope="col">الكميه</th>
+                              
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for item in items %}
+                              <tr>
+                                <td>{{item.product}}</td>
+                                <td>{{item.quantity}}</td>
+                                
+                              </tr>
+                          
+    
+                              {% endfor %}
+    
+                            </tbody>
+                        </table>
+     {% endcomment %}
+                         
+
+
+
+
+
+
+{% comment %} ************************************* {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} ************************************* {% endcomment %}
+
+
+                    </div>
+                     <!-- نهاية  -->
+                  
+                    </div>
+                
+                    {% comment %} <div class="row d-flex align-items-stretch">
+                        <div   class="col-12 p-3">
+                            <a href="{% url 'products:author_book_edit' pk=bill.pk %}" class="btn btn-info">تعديل الفاتوره</a>
+                        </div>    
+                    </div> {% endcomment %}
+  
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+        
+            </section>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+
+
+  
+{% endblock %}

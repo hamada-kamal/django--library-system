@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  
+
+  
+    <div style="direction: rtl;" class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div   class="content-wrapper p-5">
+        <!-- Content Header (Page header) -->
+
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <h1>المنتجات</h1>
+                  </div>
+   
+                </div>
+            </section>
+        
+            <!-- Main content -->
+            <section class="content">                  
+              <!-- Default box -->
+              <div class="card card-solid">
+                  <div class="row d-flex align-items-stretch">
+
+                  {% comment %} {% for book in books %} {% endcomment %}
+                    
+                  
+                    <!-- بداية الكتاب -->
+                    <div   class="col-12">
+
+                      <table class="table table-bordered text-center">
+                        <thead>
+                          <tr>
+                            {% comment %} <th scope="col">الكود</th> {% endcomment %}
+                            <th scope="col">اسم المنتج</th>
+                            <th scope="col">السعر</th>
+                            <th scope="col">الجمله</th>
+                            <th scope="col">متوفر</th>
+                            <!-- <th scope="col">اضف الى فاتوره</th> -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for product in products %}
+                          <tr>
+                            {% comment %} <th scope="row">1</th> {% endcomment %}
+                            <td><a class="product_name" href="{{ product.get_absolute_url }}">{{product}}</a></td>
+                            <td>{{product.price}}</td>
+                            <td>{{product.wholesale_price}}</td>
+                            <td>{{product.available_in_ventory}}</td>
+                            <!-- <td>
+                              <button type="button" class="btn btn-success"><i class="fas fa-cart-plus"></i></button>
+                            </td> -->
+                          </tr>
+                      
+
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+
+
+                    </div>
+                     <!-- نهاية الكتاب -->
+                  
+                     {% comment %} {% endfor %} {% endcomment %}
+                    </div>
+                
+  
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+        
+            </section>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+  
+{% endblock %}

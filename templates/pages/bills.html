@@ -1,0 +1,71 @@
+
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+  
+    <div style="direction: rtl;" class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div   class="content-wrapper p-5">
+        <!-- Content Header (Page header) -->
+
+
+            <!-- Main content -->
+            <section class="content">                  
+              <!-- Default box -->
+              <div class="card card-solid">
+                  <div class="row d-flex align-items-stretch">
+
+          
+                    <!-- بداية  -->
+                    <div   class="col-12 p-3">
+                        
+                      <table class="table table-bordered text-center">
+                        <thead>
+                          <tr>
+                            {% comment %} <th scope="col">الكود</th> {% endcomment %}
+                            <th scope="col">فاتوره باسم </th>
+                            <th scope="col">رقم الفاتوره </th>
+                        
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for bill in bills %}
+                          <tr>
+                            <td><a href="#">{{bill.client}}</a></td>
+                            <td><a href="#">{{bill.transaction_id}}</a></td>
+                            <!-- <td><a href="{{bill.get_absolute_url}}">{{bill.client}}</a></td>
+                            <td><a href="{{bill.get_absolute_url}}">{{bill.transaction_id}}</a></td> -->
+                            
+                          </tr>
+                      
+
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+
+                    </div>
+                     <!-- نهاية  -->
+                  
+                    </div>
+                
+                  
+  
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+        
+            </section>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+  
+{% endblock %}

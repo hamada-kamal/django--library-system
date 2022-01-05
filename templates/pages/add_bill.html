@@ -1,0 +1,96 @@
+
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+  
+
+<style>
+.line-form{
+    
+
+width: 450px;
+    word-spacing: 32px;
+    line-height: 40px;
+    }
+    .line-form input[type="number"]{
+        height: 25px;
+        width: 64px;
+    }
+
+</style>
+    <div style="direction: rtl;" class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div   class="content-wrapper p-5">
+        <!-- Content Header (Page header) -->
+
+
+            <!-- Main content -->
+            <section class="content">                  
+              <!-- Default box -->
+              <div class="card card-solid">
+                  <div class="row d-flex align-items-stretch">
+
+          
+                    <!-- بداية  -->
+                    <div   class="col-12 p-3">
+                        <h4>انشاء فاتوره</h4>
+                        <form method="post">
+                           {% csrf_token %}
+                           {{form|crispy}}
+                           <button class="btn btn-info" type="submit">متابعه</button>
+
+                        </form>
+                    </div>
+                     <!-- نهاية  -->
+                  
+                    </div>
+                
+                  
+  
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+        
+            </section>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+
+    <!-- <script>
+        
+        const addMoreBtn = document.getElementById("add-more")
+        const totalNewForms = document.getElementById("id_orderitem_set-TOTAL_FORMS")
+        
+        addMoreBtn.addEventListener("click", add_new_form)
+        
+        function add_new_form(event){
+            if(event){
+                event.preventDefault()
+            }
+            
+            const currentLineforms = document.getElementsByClassName
+            ("line-form")
+            const currentFormCount = currentLineforms.length
+            console.log(currentFormCount)
+            const formCopyTarget = document.getElementById("inner-form")
+            const copyEmptyForm = document.getElementById("empty-form").cloneNode(true)
+            copyEmptyForm.setAttribute('class','line-form')
+            copyEmptyForm.setAttribute('id',`form-${currentFormCount}`)
+            const regex = new RegExp('__prefix__','g')
+            copyEmptyForm.innerHTML = copyEmptyForm.innerHTML.replace(regex, currentFormCount)
+            totalNewForms.setAttribute('value', currentFormCount +1)
+            formCopyTarget.append(copyEmptyForm)
+
+        }
+
+    </script> -->
+  
+{% endblock %}

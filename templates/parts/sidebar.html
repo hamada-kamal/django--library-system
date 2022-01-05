@@ -1,0 +1,72 @@
+  <!-- Main Sidebar Container -->
+  <aside style="position: fixed;" class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+   <a href="#" class="brand-link">
+      <span class="brand-text font-weight-light"><h1>فلاجيو</h1></span>
+    </a> 
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+        </div>
+        <div class="info">
+         <h4 class="user-name">احمد حميده</h4>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          {% comment %} <li class="nav-item">
+            <a href="{% url 'products:home' %}" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
+              <p>
+                الرئيسيه
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'products:all_products' %}" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
+              <p>
+                المنتجات
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'products:bills' %}" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
+              <p>
+                الفواتير
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'products:add_product' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-th"></i> -->
+              <i class="nav-icon fas fa-plus"></i>
+              <p>
+                اضافه منتج
+              </p>
+            </a>
+          </li> {% endcomment %}
+          <li class="nav-item">
+            <a href="{% url 'products:add-bill' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-th"></i> -->
+              <i class="nav-icon fas fa-plus"></i>
+              <p>
+                انشاء فاتوره
+              </p>
+            </a>
+          </li>
+
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

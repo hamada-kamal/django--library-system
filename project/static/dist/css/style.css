@@ -1,0 +1,94 @@
+.user-name{
+    color: #d6d8d9;
+}
+.hero-image {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("spices.jpeg");
+    
+    height: 50%;
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    margin-bottom: 70px;
+  }
+  
+  .hero-text {
+    text-align: center;
+
+    
+  }
+
+  .home-page a{
+      text-decoration: none;
+      color: #FFF;
+      width: 100%;
+      margin: 6px 26px;
+  }
+  .section{
+    line-height: 2.2;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 6px 30px;
+
+  }
+.body-home{
+    
+background: #E1AD01;
+color: white;
+}
+
+.table-details th{
+  width: 220px;
+}
+.product_name{
+  color: #474343;
+    font-weight: 500;
+}
+
+.delete_btn{
+  float: left;
+}
+
+.table_title{
+width: 327px;
+}
+.qty{
+width: 100px;
+}
+.updatebtn{
+width: 70px;
+}
+.updatebtn button{
+width: 74px;
+height: 26px;
+line-height: 1px;
+/* background: #737373; */
+background: #33a30c;
+border: none;
+
+}
+.updatebtn button:hover{
+
+background: #217e02;
+}
+.deletebtn{
+width: 70px;
+
+}
+.deletebtn button{
+  width: 38px;
+  height: 28px;
+  line-height: 1px;
+  background: #d10909;
+  border: none;
+
+}
+.deletebtn button:hover{
+
+  background: rgb(145, 0, 0);
+}
+
+.new-line-form{
+  width: 217px;
+}

@@ -1,0 +1,95 @@
+
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+  
+<style>
+    table td input[type="number"]{
+        width: 164px;
+    }
+</style>
+    <div style="direction: rtl;" class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div   class="content-wrapper p-5">
+        <!-- Content Header (Page header) -->
+
+
+            <!-- Main content -->
+            <section class="content">                  
+              <!-- Default box -->
+              <div class="card card-solid">
+                  <div class="row d-flex align-items-stretch">
+
+          
+                    <!-- بداية  -->
+                    <div   class="col-12 p-3">
+                        <h3>تعديل فاتوره: {{form.instance}}</h3>
+                        
+                        <form id="form" method="post">
+                            
+                            {% for hidden_field in form.hidden_fields %}
+                              {{ hidden_field.errors }}
+                              {{ hidden_field }}
+                            {% endfor %}
+                        
+                            {% csrf_token %}
+                        
+                            {{ form.management_form }}
+                            {{ form.non_form_errors }}
+                        
+                            <!-- <h3>Update Collection</h3> -->
+                            {% for item_form in form.forms %}
+                              <hr>
+                              <h5>
+                                {% if item_form.instance.id %}
+                                  <!-- Book: {{ item_form.instance.product }} -->
+                                {% else %}
+                                  {% if form.forms|length > 1 %}
+                                    اضافه منتج جديد
+                                  
+                                  {% endif %}
+                                {% endif %}
+                              </h5>
+                              {% for hidden_field in item_form.hidden_fields %}
+                                {{ hidden_field.errors }}
+                              {% endfor %}
+                              <table class="edit-bill-table">
+                                {{ item_form.as_table }}
+                              </table>
+                            
+                        
+                              
+                            {% endfor %}
+                            <hr>
+ 
+                            <p>
+
+                              <button type="submit" value="Update collection" class="btn btn-info">حفظ</button>
+                            </p>
+                          </form>
+                    </div>
+                     <!-- نهاية  -->
+                  
+                    </div>
+                
+                  
+  
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+        
+            </section>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+  
+
+{% endblock %}
