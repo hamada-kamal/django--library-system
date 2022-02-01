@@ -8,11 +8,11 @@
         {{form|crispy}}
         
         {% if line %}
-        <button hx-post="{% url 'products:update-line' line.id %}" class="btn btn-info">تعديل</button>   
+        <button hx-post="{% url 'products:update_quiqline' line.id %}" class="btn btn-info">تعديل</button>   
         
-        <button hx-get="{% url 'products:detail-line' line.id %}" type="button"
+        <button hx-get="{% url 'products:detail_quiqline' line.id %}" type="button"
         class="btn edit-cancel">
-        Cancel
+        تراجع
         </button>
         {% else %}
          <button hx-post="." class="btn btn-info ">اضافه</button>  
@@ -23,6 +23,7 @@
          </button> 
 
         {% endif %}
+
     </form>
 </div>
 

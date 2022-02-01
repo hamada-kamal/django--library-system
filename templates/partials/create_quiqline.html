@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+   
+
+
+
+<div style="direction: rtl;" class="wrapper">
+    <div   class="content-wrapper p-5">
+          <section class="content">                  
+            <div class="card card-solid">
+                <div class="row d-flex align-items-stretch">
+                  <div   class="col-12 p-3">
+
+
+
+                    <h6>رقم الفاتوره:  {{quiqorder.transaction_id}}</h6>
+                    <h6>التاريخ:  {{quiqorder.date}}</h6>
+                    <hr>
+                    
+                    
+                    <a class="btn btn-info mb-5 bill-btn-info" href="{% url 'products:print_quiqbill' quiqorder.id %}">
+                      طباعه الفاتوره
+                    </a> 
+                    
+                    <a class="btn btn-info mb-5 bill-btn-info delete-bill" href="#">
+                      حذف الفاتوره
+                    </a>
+
+                    
+                    <table class="table bill-table text-center">
+                      
+                        <thead>
+                          <tr>
+                            <th scope="col"></th> 
+                            <th scope="col">المنتج </th>
+                            <th scope="col">الكميه</th> 
+                            <th scope="col">المجموع الفرعي</th>
+                            <th scope="col"></th> 
+                          </tr>
+                        </thead>
+                        
+                        <tbody id="appendformhere">
+     
+                                {% for quiqline in lines %}
+                                  {% include "partials/quiqline_detail.html" %}
+
+                                {% endfor %}
+                          
+                        </tbody>
+                        
+                    </table>
+                    
+
+                    <!-- <div id=""></div> -->
+
+                    <button class="btn btn-info mt-5 w-100 update-bill" hx-get="{% url 'products:quiqline_form' %}" hx-swap="beforeend" hx-target="#appendformhere">
+                      اضف منتج الى الفاتوره
+                    </button>
+
+                  </div>
+
+                  <div   class="col-12 p-3">
+
+                    <div class="total">
+                      <h6 class="total-quiqbill"> سعر الفاتوره: {{quiqorder.get_bill_total}}</h6>
+                    </div>
+                    
+                    
+                    <div class="main_paid">
+                      <h6>تم دفع:  <span class="paid">{{quiqorder.paid}}</span></h6>
+                    </div>
+                    
+                    <hr>
+                   
+                    <div class="remaining_atthattime">
+                        <form>
+                          <label class="paid_erorr"></label>
+                          <input class="paid_value form-control mb-3" type="number" placeholder="الدفع">
+                          <button class="btn btn-info paid_btn">ادفع</button>
+                        </form>
+                    </div>
+                  </div>
+            
+          </section>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+{% block javascript %}
+<script>
+  var quiqorder_id = "{{quiqorder.id}}",
+      bill_paid = "{{quiqorder.paid}}",
+      fbill_paid = parseFloat(bill_paid.replace(",", ".")),
+      t = "{{quiqorder.get_bill_total}}",
+      p = "{{quiqorder.paid}}";
+
+
+
+
+  $(".delete-bill").on("click", function(e){
+    e.preventDefault()
+    confirmResult = confirm("هل تريد حذف الفاتوره ؟")
+    if(confirmResult){
+      window.location.href = '{% url "products:delete_quiqbill" quiqorder.id %}'
+    }
+    else{
+      console.log("cancel deleting")
+    }
+  })
+
+  // Payment
+  $(".paid_btn").on("click", function(e){
+    e.preventDefault()
+    var f = $(".paid_value").val();
+    paid_value = parseFloat(f.replace(",","."));
+
+    if( isNaN(paid_value) ){
+      $(".paid_erorr").text("من فضلك ادخل المبلغ بشكل صحيح").css("color","red")
+    }
+    else if( paid_value < 0 ){
+      $(".paid_erorr").text("يجب ان تكون قيمه اكبر من الصفر").css("color","red")
+    }
+    else{
+      $(".paid_erorr").text("")
+      $.ajax({
+        url:'{% url "products:quiqbill_payment" %}',
+        dataType:'json',
+        data:{
+          'quiqorder_id':quiqorder_id,
+          'paid_value':paid_value,
+        },
+        success:function(data){
+          $(".paid").text(data["quiqbill_paid"])
+          $(".paid_erorr").text("تم دفع مبلغ بقيمه "+ data["quiqbill_paid"] + " ج.م").css("color","green")
+          $(".paid_value").val("")
+        },
+      })
+    }
+    
+    
+  })
+</script>
+
+<!-- scroll auto to ....... -->
+<script>
+    var btn = document.querySelector(".update-bill"),
+        editClientBtn = document.querySelector(".edit-client");
+    btn.onclick = function(){
+      setTimeout(function(){
+        window.scrollTo(0,document.body.scrollHeight)
+      },200)
+    }
+/*    editClientBtn.onclick = function(){
+        window.scrollTo({
+          top:0,
+          behavior:"smooth",        
+        })
+    }*/
+</script>
+
+
+
+{% endblock javascript %}

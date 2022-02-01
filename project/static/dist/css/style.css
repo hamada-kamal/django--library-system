@@ -1,3 +1,6 @@
+.btn , button{
+  border-radius: 0;
+}
 .user-name{
     color: #d6d8d9;
 }
@@ -81,6 +84,7 @@ width: 70px;
   height: 28px;
   line-height: 1px;
   background: #d10909;
+  color: #fff;
   border: none;
 
 }
@@ -91,4 +95,123 @@ width: 70px;
 
 .new-line-form{
   width: 217px;
+}
+
+.btn-hide-new-line-form,.edit-cancel,.user-form-cancel-btn, .delete-bill{
+  background: #d10909;
+  color: #FFF;
+}
+.btn-hide-new-line-form:hover,.edit-cancel:hover,.user-form-cancel-btn:hover, .delete-bill:hover{
+  background: rgb(145, 0, 0);
+  color: #FFF;
+}
+
+#appendformhere tr{
+  background: #d6d8d9;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.user-form-btn{
+  background: #17a2b8;
+  height: 29px;
+  margin-bottom: 5px;
+  line-height: 0.6;
+  color: #fff;
+}
+.table td, .table th{
+  border-top: 1px solid #ffffff;
+}
+.home-card{
+  background: #343a40;
+  color: #fff;
+}
+
+
+/* search */
+
+#ui-id-1{
+  z-index: 2000;
+  /* position: fixed; */
+  /* max-height: 270px; */
+  max-height: 163px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: #FFF;
+  width: 202px !important;
+}
+
+
+/* products page */
+.product_code{
+  letter-spacing: 5px;
+  /* text-decoration: underline; */
+}
+
+.bills_table a, .products_table a, .clients_table a{
+  color: rgb(67 65 65);
+}
+
+.products_table, .bills_table, .clients_table{
+  background: #fff;
+  margin-bottom: 0;
+}
+
+/* .products_table .products_table_row:hover , .bills_table .bills_table_row:hover{
+  background: #1ac77d;
+} */
+.products_table td, .bills_table td, .clients_table td{
+  font-weight: 600;
+  border: none;
+}
+
+.products_table thead .products_thead_row, .bills_table thead .bills_thead_row, .clients_table .clients_thead_row{
+  /* background: #d5b626; */
+  background: #4472c4;
+  color: #FFF;
+}
+.table-bordered th{
+  border: none;
+}
+
+
+/* generate bill page */
+
+.print_table{
+  font-size: 25px;
+
+}
+.print_table th{
+border: 1px solid #dee2e6;   
+}
+.table-header-info{
+font-size: 20px;
+font-weight: 600;
+width: 400px;
+margin-bottom: 30px;
+
+}
+
+.table-header-info tr td{
+margin: 5px;
+line-height: 35px;
+}
+.table-header-info tr .disc{
+letter-spacing: 5px;
+}
+.bill_footer h6{
+font-size: 20px;
+font-weight: 400;
+}
+
+.seller_info{
+  float: left;
+  font-size: 20px;
+    font-weight: 400;
+}
+
+
+.dropdown-divider {
+
+  border-top: 1px solid #4b545c;
 }

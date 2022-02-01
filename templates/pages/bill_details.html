@@ -9,6 +9,10 @@
 
 {% block content %}
   
+  {% comment %}
+    
+  {% endcomment %}
+    
 
     <div style="direction: rtl;" class="wrapper">
       <!-- Content Wrapper. Contains page content -->
@@ -27,10 +31,8 @@
                     <div   class="col-12 p-3">
                         <h3>فاتوره:   {{bill.client}} </h3>
                         <h5>رقم الفاتوره:  {{bill.transaction_id}} </h5>
-                        <hr>
-                        <hr>
-                        <hr>
-                        {% comment %} <table class="table table-bordered text-center">
+
+                        <table class="table table-bordered text-center">
                             <thead>
                               <tr>
                                 <th scope="col">المنتج </th>
@@ -42,7 +44,7 @@
                               {% for item in items %}
                               <tr>
                                 <td>{{item.product}}</td>
-                                <td>{{item.quantity}}</td>
+                                <td>{{item.qty}}</td>
                                 
                               </tr>
                           
@@ -51,51 +53,16 @@
     
                             </tbody>
                         </table>
-     {% endcomment %}
+
                          
-
-
-
-
-
-
-{% comment %} ************************************* {% endcomment %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% comment %} ************************************* {% endcomment %}
-
+                        <a href="{% url 'products:create-line' bill.id %}" class="btn btn-info">تعديل الفاتوره</a>
+                        <a href="{% url 'products:generate_bill' bill.id %}" class="btn btn-info">طباعه الفاتوره</a>
 
                     </div>
                      <!-- نهاية  -->
                   
                     </div>
-                
-                    {% comment %} <div class="row d-flex align-items-stretch">
-                        <div   class="col-12 p-3">
-                            <a href="{% url 'products:author_book_edit' pk=bill.pk %}" class="btn btn-info">تعديل الفاتوره</a>
-                        </div>    
-                    </div> {% endcomment %}
+
   
                 <!-- /.card-footer -->
               </div>

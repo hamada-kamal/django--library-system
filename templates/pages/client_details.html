@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  
+    <div style="direction: rtl;" class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div   class="content-wrapper p-5">
+        <!-- Content Header (Page header) -->
+
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <h3>{{client}}</h3>
+                  </div>
+   
+                </div>
+            </section>
+        
+            <!-- Main content -->
+            <section class="content">                  
+              <!-- Default box -->
+              <div class="card card-solid">
+                  <div class="row d-flex align-items-stretch">
+
+          <div   class="col-12 p-3">
+                      <a href="{% url 'products:delete_client' client.id %}" class="btn btn-danger delete_btn product_delete">حذف العميل</a>
+                    </div>
+                    <!-- بداية  -->
+                    <div   class="col-12 p-3">
+                        <h4>التفاصيل</h4>
+                        <table class="table table-info table-details">
+                            
+                            <tbody>
+                              <tr>
+                                <th scope="row"> كود العميل</th>
+                                <td>{{client.id}} </td>  
+                              </tr>
+                           
+                              <tr>
+                                <th scope="row">رقم الهاتف </th>
+                                <td>{{client.phone}}</td>
+                              </tr>
+
+                              <tr>
+                                <th scope="row">المبلغ المتبقى </th>
+                                <td>{{client.remaining_money}} ج.م</td>
+                              </tr>
+                              
+                           
+                            </tbody>
+                          </table>
+                    </div>
+                     <!-- نهاية  -->
+                     
+                    </div>
+                
+                    <div class="row d-flex align-items-stretch">
+                      <!-- بداية  -->
+                      <div   class="col-12 p-3">
+                        <h4>فواتير العميل</h4>
+                        <table class="table table-details text-center bills_table">
+                            <thead >
+                              <tr class="bills_thead_row">
+                                <th scope="col">كود الفاتوره </th>
+                                <th scope="col">تاريخ الفاتوره</th> 
+                                <th scope="col"> عدد العناصر </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                              {% for bill in client_bills %}
+                              <tr class="bills_table_row">
+                                <td><a href="{% url 'products:bill_details' bill.id %}">{{bill.transaction_id}}</a></td>
+                                <td><a href="{% url 'products:bill_details' bill.id %}">{{bill.date_ordered}}</a> </td>  
+                                <td><a href="{% url 'products:bill_details' bill.id %}">{{bill.get_bill_count}}</a> </td>  
+                              </tr>   
+                              {% endfor %}
+                                                      
+                            </tbody>
+                          </table>
+                      </div>
+                      <!-- نهاية  -->
+                    
+                    </div>
+                
+          
+                
+  
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+        
+            </section>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+  
+{% endblock %}
+
+
+{% block javascript %}
+
+
+
+  <script>
+    $(".bills_table .bills_table_row:odd").css("background","#d9e1f2")
+  </script>
+{% endblock javascript %}

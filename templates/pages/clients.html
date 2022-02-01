@@ -5,20 +5,20 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-
 {% block content %}
-  
     <!-- Navbar -->
-    <nav  class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
+
       </ul>
       <!-- SEARCH Products NAME & CODE FORM -->
-      <form class="form-inline ml-3" action="{% url 'products:bills' %}">
+      <form class="form-inline ml-3" action="{% url 'products:clients' %}">
         <div class="input-group">
-          <input id="searchIdforbills" class="form-control form-control-navbar" name="search_bills" type="search" placeholder="البحث فى الفواتير..." aria-label="Search">
+          <input id="searchIdforclients" class="form-control form-control-navbar" name="search_clients" type="search" placeholder="البحث عن عميل..." aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-navbar" type="submit">
               <i class="fas fa-search"></i>
@@ -34,19 +34,17 @@
 
 
 
-
-
     <div style="direction: rtl;" class="wrapper">
       <!-- Content Wrapper. Contains page content -->
       <div   class="content-wrapper p-5">
         <!-- Content Header (Page header) -->
-
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>الفواتير</h1>
+            <h1>العملاء</h1>
           </div>
 
         </div>
+
             <!-- Main content -->
             <section class="content">                  
               <!-- Default box -->
@@ -58,27 +56,27 @@
                     <div   class="col-12 p-3">
                         
                       
-                      {% if bills %}
+                      {% if clients %}
                         
                       
                         
-                      <table class="table table-bordered text-center bills_table">
+                      <table class="table table-bordered clients_table text-center">
                         <thead>
-                          <tr class="bills_thead_row">
-                            <th scope="col">فاتوره باسم </th>
-                            <th scope="col">رقم الفاتوره </th>
-                            <th scope="col">تاريخ الفاتوره </th>
-                            <th scope="col"> عدد العناصر </th>
+                          <tr class="clients_thead_row">
+                            <th scope="col"> كود العميل </th>
+                            <th scope="col"> الاسم </th>
+                            <th scope="col">رقم العميل </th>
+                            <th scope="col">  </th>
                         
                           </tr>
                         </thead>
                         <tbody>
-                          {% for bill in bills %}
-                          <tr class="bills_table_row">
-                            <td><a href="{% url 'products:create-line' bill.id %}">{{bill.client}}</a></td>
-                            <td><a href="{% url 'products:create-line' bill.id %}">{{bill.transaction_id}}</a></td>
-                            <td><a href="{% url 'products:create-line' bill.id %}">{{bill.date_ordered}}</a></td>
-                            <td><a href="{% url 'products:create-line' bill.id %}">{{bill.get_bill_count}}</a> </td>  
+                          {% for client in clients %}
+                          <tr class="clients_table_row">
+                            <td><a href="{% url 'products:show-client' client.id %}">{{client.id}}</a></td>
+                            <td><a href="{% url 'products:show-client' client.id %}">{{client}}</a></td>
+                            <td><a href="{% url 'products:show-client' client.id %}">{{client.phone}}</a></td>
+                            <td><a href="{% url 'products:another-bill' client.id %}"> + فاتوره جديده </a></td>
                             <!-- <td><a href="{{bill.get_absolute_url}}">{{bill.client}}</a></td>
                             <td><a href="{{bill.get_absolute_url}}">{{bill.transaction_id}}</a></td> -->
                             
@@ -90,7 +88,7 @@
                         </tbody>
                       </table>
                       {% else %}
-                      <h4 class="m-5">لا توجد فواتير فى الوقت الحالى .</h4>
+                      <h4 class="m-5">لا يوجد عملاء فى الوقت الحالى .</h4>
                       {% endif %}
                     </div>
                      <!-- نهاية  -->
@@ -114,11 +112,14 @@
   
 {% endblock %}
 
+
 {% block javascript %}
-
-
-
   <script>
-    $(".bills_table .bills_table_row:odd").css("background","#d9e1f2")
+    $(".clients_table .clients_table_row:odd").css("background","#d9e1f2")
+/*    .hover(function(){
+      $(this).css("background","#1ac77d")})
+    .mouseleave(function(){
+      $(this).css("background","#b3bfb6")
+    })*/
   </script>
 {% endblock javascript %}

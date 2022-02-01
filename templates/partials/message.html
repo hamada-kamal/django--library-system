@@ -1,0 +1,35 @@
+
+<div  class="alert alert-danger" role="alert">
+    المنتج موجود بالفعل     
+    <a href="#" data-dismiss="alert" class="close close-x" aria-label="close">x</a>
+  </div>
+
+
+
+  <style>
+.alert{
+    position: fixed;
+    bottom: 15px;
+    right: 58px;
+    /*right: 279px;*/
+    /*width: 275px;*/
+    width: 385px;
+    z-index: 2000;
+}
+/*.alert a{
+    color: #fff;
+    opacity: 1;
+
+}
+.close-x{
+    color: #fff;
+    opacity: 1;
+
+}*/
+
+  </style>
+  {% block javascript %}
+    <script>      
+        setTimeout(function(){ $(".alert").css("display","none") }, 3000)
+    </script>
+  {% endblock javascript %}

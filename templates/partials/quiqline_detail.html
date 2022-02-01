@@ -1,0 +1,65 @@
+{% load static %}
+        <tr hx-target="this" hx-swap="outerHTML">
+            <td scope="col" class="updatebtn"><button hx-post="{% url 'products:update_quiqline' quiqline.id %}" class="btn btn-info">تعديل</button></td>
+
+            <td scope="col" class="table_title">{{quiqline}} </td>
+            <td scope="col" class="qty">{{quiqline.qty}}</td>
+            <td scope="col" class="subtotal-quiqline">{{quiqline.get_total}}</td>
+
+
+            
+            <td scope="col" class="deletebtn"><button data-product="{{quiqline.id}}" class="delebtn btn btn-info delebtn{{quiqline.id}}"><i class="fas fa-trash"></i></button></td>
+        </tr>
+        
+        
+
+
+
+
+
+
+
+
+
+
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+{% block javascript %}
+
+
+<script>
+    var quiqorder_id = "{{quiqline.quiqorder.id}}";
+    //to update the (total & total2 & still) when user remaining change in bill page 
+    $.ajax({
+    url:"{% url 'products:live_quiqbill' %}",
+    dataType:"json",
+    data:{
+        "quiqbill_id":quiqorder_id,
+    },
+    success:function(data){    
+       $(".total-quiqbill").text(" سعر الفاتوره:"+data["quiqbill_total"])
+    },
+    })
+
+    //delete quiqline 
+    $(".delebtn").on("click",function(){
+        var quiqline_id  = $(this).data("product")
+   
+        $.ajax({
+          url : '{% url "products:delete_quiqline" %}',
+          dataType:"json",
+          data:{
+            "quiqline_id":quiqline_id,
+          },
+          success:function(data){
+           if(!data["quiqline_founded"]){
+
+            $(".total-quiqbill").text("سعر الفاتوره: "+data["quiqorder_total"])
+            $(".delebtn"+quiqline_id).parent().parent().hide()
+            }
+            
+          },
+        })
+      })
+</script>
+
+{% endblock javascript %}

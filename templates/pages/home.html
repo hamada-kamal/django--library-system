@@ -1,18 +1,15 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html  lang="ar">
 <head>
-  <!-- good color #3c5357 -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
   
     <title>فلاجيو</title>
-    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
-
     <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="icon" type="image/x-icon" href="{% static 'dist/img/favicon.ico' %}">
+
     <!-- Font Awesome Icons -->
     <!-- <link rel="stylesheet" href="{% static 'plugins/jquery_datepacker/jquery_ui.css' %}"> -->
     <!-- IonIcons -->
@@ -20,23 +17,59 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'dist/css/adminlte_ar.min.css' %}">
     <link rel="stylesheet" href="{% static 'dist/css/style.css' %}">
+
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   </head>
-  <body dir="rtl" class="hold-transition sidebar-mini">
 
 
 
-    {% include 'parts/sidebar.html' %}
+
+<body class="body-home">
+
+
+    <div class="hero-image">
+        <div class="hero-text">
+          <h1>مرحبا</h1>
+          <h1>احمد حميده</h1>
+        </div>
+      </div>
     
- 
-{% block content %}
-  
-{% endblock %}
-{% comment %} {% include 'parts/footer.html' %} {% endcomment %}
+<div class="container home-page">
+
+    <div class="row home-row">
+        <a href="{% url 'products:all_products' %}">
+        <div class="col text-center bg-dark section">
+            المنتجات
+        </div>
+    </a>
+    <a href="{% url 'products:clients' %}">
+        <div class="col text-center bg-dark section">
+           العملاء 
+        </div>
+    </a>
+        
+        <a href="{% url 'products:bills' %}">
+        <div class="col text-center bg-dark section">
+            الفواتير
+        </div>
+    </a>
+        <a href="{% url 'products:reports' %}">
+        <div class="col text-center bg-dark section">
+            تقرير
+        </div>
+    </a>
+        <a href="{% url 'products:add_product' %}">
+        <div class="col text-center bg-dark section">
+            اضافه منتج
+        </div>
+    </a>
+        
+    </div>
+    
+
 </div>
-<!-- REQUIRED SCRIPTS -->
-<!-- <script src="{% static 'plugins/jquery_datepacker/jquery_ui.js' %}"></script> -->
+<!-- Javascript Files -->
 
 <!-- jQuery -->
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
@@ -49,42 +82,5 @@
 <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
 
 <script src="{% static 'dist/js/demo.js' %}"></script>
-
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<!--this script nessecary for htmx-->
-<script>
-  document.body.addEventListener('htmx:configRequest', (event) => {
-      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-  })
-</script>
-
-<!-- search -->
-<script>
-  $(function() {
-    
-    $("#searchId").autocomplete({
-    source:"{% url 'products:autosearch' %}",
-    });
-    
-    $("#searchIdforbills").autocomplete({
-      source:"{% url 'products:autosearch_bills' %}",
-      });
-    $("#searchIdforclients").autocomplete({
-      source:"{% url 'products:autosearch_clients' %}",
-      });
-    $("#searchIdforquiqbills").autocomplete({
-      source:"{% url 'products:autosearch_quiqbills' %}",
-      });
-  });
-</script>
-
-
-
-
-{% block javascript %}
-  
-{% endblock javascript %}
-  
 </body>
 </html>

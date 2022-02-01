@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div style="direction: rtl;" class="wrapper">
+  <div   class="content-wrapper p-5">
+          <section class="content">                  
+            <div class="card card-solid">
+                <div class="row d-flex align-items-stretch">
+                  <div class="col-12 p-3">
+                    <div class="title text-center mb-5"><h2>مكتيه فلاجيو</h2></div>
+                    <div class="bill-header">
+                     
+                      <table class="table-header-info">
+                        
+                        <tr>
+                          <td>تاريخ الفاتوره: </td>
+                          <td>{{quiqbill.date}}</td>
+                        </tr>
+                        <tr>
+                          <td>رقم الفاتوره: </td>
+                          <td class="disc">{{quiqbill.transaction_id}}</td>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+                  <div class="col-12 p-3">
+                    <table class="table table-bordered text-center print_table">
+                        <thead>
+                            <tr>
+
+                              <th scope="col">م</th>
+                              <th scope="col">كود</th>
+                              <th scope="col">المنتج </th>
+                              <th scope="col">الكميه</th> 
+                              <th scope="col">السعر</th> 
+                              <th scope="col">المجموع الفرعي</th>
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+     
+                            {% for quiqline in quiqlines %}
+                                <tr>
+                                    <td scope="col" class=""> {{ forloop.counter }}</td>
+                                    <td scope="col" class="">{{quiqline.product.code}} </td>
+                                    <td scope="col" class="">{{quiqline}} </td>
+                                    <td scope="col" class="">{{quiqline.qty}}</td>
+                                    <td scope="col" class="">{{quiqline.product.price}}</td>
+                                    <td scope="col" class="">{{quiqline.get_total}}</td>                
+                                </tr>
+                            {% endfor %}
+                      
+                    </tbody>
+                    </table>
+
+                    
+                  </div>
+
+                  <div   class="col-12 p-3 bill_footer">
+                    <div class="total">
+                      <h6 class="total-bill"> سعر الفاتوره: {{quiqbill.get_bill_total}}</h6>
+                    </div>
+                    
+                    <div class="paid mb-5">
+                      <h6>تم دفع:  {{quiqbill.paid}}</h6>
+                    </div>
+                    
+                    <div class="seller_info">
+                      <table class="table_seller_info">
+                        <tr>
+                          <td>اداره: </td>
+                          <td>احمد حميده</td>
+                        </tr>
+                        <tr>
+                          <td>الهاتف: </td>
+                          <td class="disc">01285487545</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+            
+
+                <div class="col-12 text-center m-2">
+                    <button class="btn btn-info print-btn">طباعه الفاتوره</button>
+                </div>
+                  </div>
+            </div>
+          </section>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+
+    $(".print-btn").on("click" ,function(){
+        $(this).css("display" , "none")
+        window.print()
+        $(this).css("display" , "inline")
+    })
+
+
+</script>
+
+
+
+
+{% endblock javascript %}

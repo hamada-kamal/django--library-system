@@ -16,9 +16,9 @@
         </li>
       </ul>
       <!-- SEARCH Products NAME & CODE FORM -->
-      <form class="form-inline ml-3" action="{% url 'products:bills' %}">
+      <form class="form-inline ml-3" action="{% url 'products:quiqbills' %}">
         <div class="input-group">
-          <input id="searchIdforbills" class="form-control form-control-navbar" name="search_bills" type="search" placeholder="البحث فى الفواتير..." aria-label="Search">
+          <input id="searchIdforquiqbills" class="form-control form-control-navbar" name="search_quiqbills" type="search" placeholder="البحث فى الفواتير..." aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-navbar" type="submit">
               <i class="fas fa-search"></i>
@@ -43,7 +43,7 @@
 
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>الفواتير</h1>
+            <h1>الفواتير السريعه</h1>
           </div>
 
         </div>
@@ -58,14 +58,13 @@
                     <div   class="col-12 p-3">
                         
                       
-                      {% if bills %}
+                      {% if quiqbills %}
                         
                       
                         
                       <table class="table table-bordered text-center bills_table">
                         <thead>
                           <tr class="bills_thead_row">
-                            <th scope="col">فاتوره باسم </th>
                             <th scope="col">رقم الفاتوره </th>
                             <th scope="col">تاريخ الفاتوره </th>
                             <th scope="col"> عدد العناصر </th>
@@ -73,12 +72,11 @@
                           </tr>
                         </thead>
                         <tbody>
-                          {% for bill in bills %}
+                          {% for quiqbill in quiqbills %}
                           <tr class="bills_table_row">
-                            <td><a href="{% url 'products:create-line' bill.id %}">{{bill.client}}</a></td>
-                            <td><a href="{% url 'products:create-line' bill.id %}">{{bill.transaction_id}}</a></td>
-                            <td><a href="{% url 'products:create-line' bill.id %}">{{bill.date_ordered}}</a></td>
-                            <td><a href="{% url 'products:create-line' bill.id %}">{{bill.get_bill_count}}</a> </td>  
+                            <td><a href="{% url 'products:create_quiqline' quiqbill.id %}">{{quiqbill.transaction_id}}</a></td>
+                            <td><a href="{% url 'products:create_quiqline' quiqbill.id %}">{{quiqbill.date}}</a></td>
+                            <td><a href="{% url 'products:create_quiqline' quiqbill.id %}">{{quiqbill.get_bill_count}}</a> </td>  
                             <!-- <td><a href="{{bill.get_absolute_url}}">{{bill.client}}</a></td>
                             <td><a href="{{bill.get_absolute_url}}">{{bill.transaction_id}}</a></td> -->
                             

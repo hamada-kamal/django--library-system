@@ -8,19 +8,19 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
         </div>
         <div class="info">
          <h4 class="user-name">احمد حميده</h4>
         </div>
-      </div>
+      </div> -->
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-          {% comment %} <li class="nav-item">
+          <li class="nav-item">
             <a href="{% url 'products:home' %}" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>
@@ -30,7 +30,8 @@
           </li>
           <li class="nav-item">
             <a href="{% url 'products:all_products' %}" class="nav-link">
-              <i class="nav-icon fas fa-home"></i>
+              <!-- <i class="nav-icon fas fa-home"></i> -->
+              <i class="nav-icon fab fa-product-hunt"></i>
               <p>
                 المنتجات
               </p>
@@ -38,21 +39,35 @@
           </li>
           <li class="nav-item">
             <a href="{% url 'products:bills' %}" class="nav-link">
-              <i class="nav-icon fas fa-home"></i>
+              <!-- <i class="nav-icon fas fa-home"></i> -->
+              <i class="nav-icon fas fa-file-invoice"></i>
               <p>
                 الفواتير
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'products:add_product' %}" class="nav-link">
+            <a href="{% url 'products:clients' %}" class="nav-link">
               <!-- <i class="nav-icon fas fa-th"></i> -->
-              <i class="nav-icon fas fa-plus"></i>
+              <!-- <i class="nav-icon fas fa-home"></i> -->
+              <i class="nav-icon fas fa-users"></i>
               <p>
-                اضافه منتج
+                العملاء
               </p>
             </a>
-          </li> {% endcomment %}
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'products:quiqbills' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-th"></i> -->
+              <i class="nav-icon fas fa-file-invoice"></i>
+              <p>
+                الفواتير السريعه
+              </p>
+            </a>
+          </li>
+
+          <li><hr class="dropdown-divider"></li>
+          
           <li class="nav-item">
             <a href="{% url 'products:add-bill' %}" class="nav-link">
               <!-- <i class="nav-icon fas fa-th"></i> -->
@@ -62,6 +77,28 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{% url 'products:add_quiqbill' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-th"></i> -->
+              <i class="nav-icon fas fa-plus"></i>
+              <p>
+                انشاء فاتوره سريعه
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'products:add_product' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-th"></i> -->
+              <i class="nav-icon fas fa-plus"></i>
+              <p>
+                اضافه منتج
+              </p>
+            </a>
+          </li>
+
+
+
 
 
         </ul>

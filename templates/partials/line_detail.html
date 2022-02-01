@@ -1,13 +1,93 @@
-
+{% load static %}
         <tr hx-target="this" hx-swap="outerHTML">
             <td scope="col" class="updatebtn"><button hx-post="{% url 'products:update-line' line.id %}" class="btn btn-info">تعديل</button></td>
 
             <td scope="col" class="table_title">{{line}} </td>
-            <td scope="col" class="qty">{{line.quantity}}</td>
+            <td scope="col" class="qty">{{line.qty}}</td>
             <td scope="col" class="subtotal-line">{{line.get_total}}</td>
 
+
             
-            <td scope="col" class="deletebtn"><button hx-post="{% url 'products:delete-line' line.id %}" class="btn btn-info"><i class="fas fa-trash"></i></button></td>
+            <td scope="col" class="deletebtn"><button data-product="{{line.id}}" class="delebtn delebtn{{line.id}}" class="btn btn-info"><i class="fas fa-trash"></i></button></td>
         </tr>
         
         
+
+
+
+
+
+
+
+
+
+
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+{% block javascript %}
+<!-- get bill total -->
+  <script>
+
+    var order_id = "{{line.order.id}}";
+    //to update the (total & total2 & still) when user remaining change in bill page 
+  $.ajax({
+    url:"{% url 'products:live_bill_user_update' %}",
+    dataType:"json",
+    data:{
+      "bill_id":order_id,
+    },
+    success:function(data){
+                if(data["bill_total"] || data["client_remaining"] || data["bill_paid"] == 0 ){
+                var t2 = parseFloat(data["client_remaining"]) + parseFloat(data["bill_total"]),
+                    still = t2 - parseFloat(data["bill_paid"]);
+                $(".total-bill").text(" سعر الفاتوره:"+data["bill_total"])
+                $(".client_remaining").text("رصيد ما قبله: " + data["client_remaining"])
+                $(".total2").text(t2)
+                $(".still").text(still)
+              }
+              else{
+                var t2 = parseFloat(data["client_remaining"].replace(",",".")) + parseFloat(data["bill_total"].replace(",",".")),
+                    still = t2 - parseFloat(data["bill_paid"].replace(",","."));
+                $(".total-bill").text(" سعر الفاتوره:"+data["bill_total"])
+                $(".total2").text(t2)
+                $(".client_remaining").text("رصيد ما قبله: " + data["client_remaining"])
+                $(".still").text(still)
+              }
+    },
+  })
+
+  
+  </script> 
+
+
+  <!-- delete line -->
+  <script>
+
+    $(".delebtn").on("click",function(){
+      var line_id  = $(this).data("product")
+ 
+      $.ajax({
+        url : '{% url "products:delete-line" %}',
+        dataType:"json",
+        data:{
+          "line_id":line_id,
+        },
+        success:function(data){
+         if(!data["line_founded"]){
+          // total2 = sum of bill total and client remaining
+          $(".total2").text(data["total2"])
+          // still = total2 - bill paid
+          $(".still").text(data["still"])
+          $(".total-bill").text("سعر الفاتوره: "+data["order_total"])
+          $(".delebtn"+line_id).parent().parent().hide()
+          }
+          
+        },
+      })
+    })
+  </script> 
+
+  
+
+
+
+{% endblock javascript %}

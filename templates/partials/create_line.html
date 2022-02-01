@@ -4,22 +4,7 @@
 {% block content %}
    
 
-<style>
-.bill-table{
-   border: none; 
-   color: #d6d8d9;
-}
-#appendformhere tr{
-    background: #d6d8d9;
-    color: #343a40;
-    font-size: 15px;
-    font-weight: 600;
-}
-btn{
-  background: #737373;
-}
 
-</style>
 
 <div style="direction: rtl;" class="wrapper">
     <div   class="content-wrapper p-5">
@@ -27,22 +12,39 @@ btn{
             <div class="card card-solid">
                 <div class="row d-flex align-items-stretch">
                   <div   class="col-12 p-3">
-                     
-                    <h5>فاتوره باسم:  {{order.client}}</h5>
-                    <h6>رقم الفاتوره:  {{order.transaction_id}}</h6>
-                    <h6>رقم الهاتف:  {{order.client.phone}}</h6>
-                    <h6 class="mb-5">التاريخ:  {{order.date_ordered}}</h6>
+
                     
-       
 
+                    <div id="client-info">
+                      <h5>فاتوره باسم:  <a href="{% url 'products:show-client' order.client.id %}">{{order.client}}</a></h5>
+                      <h6>رقم الهاتف:  {{order.client.phone}}</h6>
+                    </div>
 
+                    <h6>رقم الفاتوره:  {{order.transaction_id}}</h6>
+                    <h6>التاريخ:  {{order.date_ordered}}</h6>
+                    {% comment %} <h6>حاله الفاتوره:  
+                      {% if order.complete %}
+                        <span class="text-warning">مغلقه</span>
+                      {% else %}
+                        <span class="text-success">مفتوحه</span>
+                      {% endif %}
+                      
+                    </h6> {% endcomment %}
+                    <hr>
+                    <button class="btn btn-info mb-5 bill-btn-info edit-client"  hx-target="#client-info" hx-swap="innerHTML" hx-post="{% url 'products:user-bill-form' order.id %}">
+                      تعديل بيانات العميل
+                    </button>
+                    <a class="btn btn-info mb-5 bill-btn-info" href="{% url 'products:another-bill' order.client.id %}">
+                      فاتوره جديده لهذا العميل
+                    </a>
+                    <a class="btn btn-info mb-5 bill-btn-info" href="{% url 'products:generate_bill' order.id %}">
+                      تقفيل الفاتوره
+                    </a>
+                    
+                    <a class="btn btn-info mb-5 bill-btn-info delete-bill" href="#">
+                      حذف الفاتوره
+                    </a>
 
-
-
-
-  
-
-  
                     
                     <table class="table bill-table text-center">
                       
@@ -60,26 +62,143 @@ btn{
      
                                 {% for line in lines %}
                                   {% include "partials/line_detail.html" %}
+
                                 {% endfor %}
                           
                         </tbody>
+                        
                     </table>
                     
+
                     <!-- <div id=""></div> -->
 
-                    <button class="btn btn-info mt-5 w-100" hx-get="{% url 'products:line-form' %}" hx-swap="beforeend" hx-target="#appendformhere">
+                    <button class="btn btn-info mt-5 w-100 update-bill" hx-get="{% url 'products:line-form' %}" hx-swap="beforeend" hx-target="#appendformhere">
                       اضف منتج الى الفاتوره
                     </button>
 
-
-
-
-
                   </div>
+
+                  <div   class="col-12 p-3">
+                    <div class="total">
+                      <h6 class="total-bill"> سعر الفاتوره: {{order.get_bill_total}}</h6>
+                    </div>
+                    <div class="remaining">
+                      <h6 class="client_remaining"> رصيد ما قبله:  {{order.client.remaining_money}}</h6>
+                    </div>
+
+                    <div class="total+2">
+                      <h6>الاجمالى:  <span class="total2"></span></h6>
+                    </div>
+                    <div class="main_paid">
+                      <h6>تم دفع:  <span class="paid">{{order.paid}}</span></h6>
+                    </div>
+                    <div class="still+">
+                      <h6>مازال:  <span class="still"></span></h6>
+                    </div>
+                    <hr>
+                    <!-- <div class="remaining_atthattime">
+                      <small> رصيد ما قبله(قبل هذه الفاتوره):  {{order.remaining_atthattime}}</small>
+                    </div> -->
+                    <div class="remaining_atthattime">
+                        <form>
+                          <label class="paid_erorr"></label>
+                          <input class="paid_value form-control mb-3" type="number" placeholder="الدفع">
+                          <button class="btn btn-info paid_btn">ادفع</button>
+                        </form>
+                    </div>
                   </div>
-            </div>
+            
           </section>
         </div>
     </div>
+
+
+
+
 {% endblock %}
+{% block javascript %}
+<script>
+
+
+  
+
+  //will store order&client >> id in variables because will need it in client detail page 
+  var order_id = "{{order.id}}",
+      client_id = "{{order.client.id}}",
+      bill_paid = "{{order.paid}}",
+      fbill_paid = parseFloat(bill_paid.replace(",", ".")),
+      t = "{{order.get_bill_total}}",
+      cr = "{{order.client.remaining_money}}",
+      t2 = parseFloat(t.replace(",", ".")) + parseFloat(cr.replace(",", ".")),
+      p = "{{order.paid}}",
+      still =  t2 - parseFloat(p.replace(",", "."));
+  $(".total2").text(t2)
+  $(".still").text(still)
+
+
+
+  $(".delete-bill").on("click", function(e){
+    e.preventDefault()
+    confirmResult = confirm("هل تريد حذف الفاتوره ؟")
+    if(confirmResult){
+      window.location.href = "{% url 'products:delete-bill' order.id %}"
+    }
+    else{
+      console.log("cancel deleting")
+    }
+  })
+
+  // Payment
+  $(".paid_btn").on("click", function(e){
+    e.preventDefault()
+    var f = $(".paid_value").val();
+    paid_value = parseFloat(f.replace(",","."));
+
+    if( isNaN(paid_value) ){
+      $(".paid_erorr").text("من فضلك ادخل المبلغ المدفوع").css("color","red")
+    }
+    else if( paid_value < 0 ){
+      $(".paid_erorr").text("يجب ان تكون قيمه اكبر من الصفر").css("color","red")
+    }
+    else{
+      $(".paid_erorr").text("")
+      $.ajax({
+        url:'{% url "products:payment" %}',
+        dataType:'json',
+        data:{
+          'order_id':order_id,
+          'paid_value':paid_value,
+        },
+        success:function(data){
+          $(".still").text(data["still"])
+          $(".paid").text(data["bill_paid"])
+          $(".paid_erorr").text("تم دفع مبلغ بقيمه "+ data["bill_paid"] + " ج.م").css("color","green")
+          $(".paid_value").val("")
+        },
+      })
+    }
     
+    
+  })
+</script>
+
+<!-- scroll auto to ....... -->
+<script>
+    var btn = document.querySelector(".update-bill"),
+        editClientBtn = document.querySelector(".edit-client");
+    btn.onclick = function(){
+      setTimeout(function(){
+        window.scrollTo(0,document.body.scrollHeight)
+      },200)
+    }
+    editClientBtn.onclick = function(){
+        window.scrollTo({
+          top:0,
+          behavior:"smooth",        
+        })
+    }
+</script>
+
+
+
+{% endblock javascript %}

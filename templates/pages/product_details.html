@@ -107,9 +107,9 @@
 
                     <div   class="col-12 p-3">
                         <a href="{% url 'products:edit_product' product.PROslug %}" class="btn btn-info">تعديل المنتج</a>
-                        <a href="#" class="btn btn-danger delete_btn">حذف المنتج</a>
+                        <a href="#" class="btn btn-danger delete_btn product_delete">حذف المنتج</a>
                     </div>
-
+                    <!-- {% url 'products:delete_product' product.id %} -->
                   
                     </div>
                 
@@ -128,3 +128,16 @@
     </div>
   
 {% endblock %}
+
+
+{% block javascript %}
+  <script>
+    $(".product_delete").on("click",function(e){
+      e.preventDefault()
+      var confirm_result = confirm("هل تريد حذف هذا المنتج ؟")
+      if(confirm_result){
+        window.location.href = "{% url 'products:delete_product' product.id %}"
+      }
+    })
+  </script>
+{% endblock javascript %}

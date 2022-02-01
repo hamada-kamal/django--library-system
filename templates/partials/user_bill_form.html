@@ -1,0 +1,11 @@
+{% load crispy_forms_tags %}
+
+<div class="user-form mb-3" hx-target="this" hx-swap="outerHTML">
+    <form method="post" >
+        {% csrf_token %}
+        {{form|crispy}}
+        <button class="btn btn-info user_form_save_btn" hx-post="{% url 'products:user-bill-form' bill.id %}">حفظ</button>
+        <button class="btn user-form-cancel-btn" hx-post="{% url 'products:detail-client' client.id %}">تراجع</button>
+    </form>
+</div>
+
