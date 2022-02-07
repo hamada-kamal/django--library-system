@@ -8,9 +8,9 @@
         {{form|crispy}}
         
         {% if line %}
-        <button hx-post="{% url 'products:update_quiqline' line.id %}" class="btn btn-info">تعديل</button>   
+        <button hx-post="{% url 'products:update_incomline' line.id %}" class="btn btn-info">تعديل</button>   
         
-        <button hx-get="{% url 'products:detail_quiqline' line.id %}" type="button"
+        <button hx-get="{% url 'products:detail_incomline' line.id %}" type="button"
         class="btn edit-cancel">
         تراجع
         </button>
@@ -23,28 +23,15 @@
          </button> 
 
         {% endif %}
-
     </form>
 </div>
 
-{% if product_qty_available >= 0 %}
-<div  class="alert not_enough_alert text-left" role="alert">
-    <h5>كميه المنتج لا تكفى</h5>
-    يتوفر ( {{product_qty_available}} ) قطعه      
-    <a href="#" data-dismiss="alert" class="close close-x" aria-label="close">x</a>
-</div>
-{% endif %}
-
-<!-- cancel adding new line form -->
 <script>
-    //setTimeout(function(){ $(".alert").hide() }, 8000)
 
     $(".btn-hide-new-line-form").on("click",function(){
         $(this).parent().parent().hide()
     })
 </script>
-
-
 
 
 

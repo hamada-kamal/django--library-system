@@ -33,7 +33,6 @@
 {% block content %}
   
 {% endblock %}
-{% comment %} {% include 'parts/footer.html' %} {% endcomment %}
 </div>
 <!-- REQUIRED SCRIPTS -->
 <!-- <script src="{% static 'plugins/jquery_datepacker/jquery_ui.js' %}"></script> -->
@@ -43,10 +42,8 @@
 <!-- Bootstrap -->
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE -->
-<script src="{% static 'dist/js/adminlte.js' %}"></script>
 <!-- OPTIONAL SCRIPTS -->
 
-<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
 
 <script src="{% static 'dist/js/demo.js' %}"></script>
 
@@ -75,6 +72,9 @@
       });
     $("#searchIdforquiqbills").autocomplete({
       source:"{% url 'products:autosearch_quiqbills' %}",
+      });
+    $("#searchIdforincombills").autocomplete({
+      source:"{% url 'products:autosearch_incombills' %}",
       });
   });
 </script>

@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+   
+
+
+
+<div style="direction: rtl;" class="wrapper">
+    <div   class="content-wrapper p-5">
+          <section class="content">                  
+            <div class="card card-solid">
+                <div class="row d-flex align-items-stretch">
+                  <div   class="col-12 p-3">
+
+
+
+                    <h6>رقم الفاتوره:  {{incomorder.transaction_id}}</h6>
+                    <h6>التاريخ:  {{incomorder.date}}</h6>
+
+                      
+                    <hr>
+                    <div class="emptybill_temporary_div bg-success  text-center">
+                      
+                    </div>
+                    {% if incomorder.empty_done %}
+                    
+                    <div class="emptybill_done bg-success mb-2 text-center">
+                      <h5 class="p-1">تم تفريغ الفاتوره فى المخزن</h5>
+                    </div>
+                    {% else %}
+                    <button class="btn btn-info mb-5 empty_the_bill">
+                      تفريغ الفاتوره فى المخزن
+                    </button>
+                    {% endif %}
+                    <a class="btn btn-info mb-5 bill-btn-info" href="{% url 'products:add_product' %}">
+                      اضافه منتج
+                    </a>
+                   
+                    
+                    <a class="btn btn-info mb-5 bill-btn-info delete-bill" href="#">
+                      حذف الفاتوره
+                    </a>
+
+                    
+                    <table class="table bill-table text-center">
+                      
+                        <thead>
+                          <tr>
+                            <th scope="col"></th> 
+                            <th scope="col">المنتج </th>
+                            <th scope="col">الكميه</th> 
+                            <th scope="col"></th> 
+                          </tr>
+                        </thead>
+                        
+                        <tbody id="appendformhere">
+     
+                                {% for incomline in lines %}
+                                  {% include "partials/incomline_detail.html" %}
+
+                                {% endfor %}
+                          
+                        </tbody>
+                        
+                    </table>
+                    
+
+                    <!-- <div id=""></div> -->
+
+                    <button class="btn btn-info mt-5 w-100 update-bill" hx-get="{% url 'products:incomline_form' %}" hx-swap="beforeend" hx-target="#appendformhere">
+                      اضف منتج الى الفاتوره
+                    </button>
+                    
+
+                  </div>
+
+                  <div   class="col-12 p-3">
+
+                    <div id="info">
+                      <div class="seller">
+                        <h5> التاجر: 
+                          
+                          {% if incomorder.seller %}
+                            {{incomorder.seller}}
+                          {% else %}
+                            لا يوجد اسم
+                          {% endif %}
+                            
+                        </h5>
+                      </div>
+                      <div class="total">
+                        <h5> سعر الفاتوره: {{incomorder.total}}</h5>
+                      </div>
+                      <div class="remaining">
+                        <h5> رصيد ما قبله: {{incomorder.remaining_money}}</h5>
+                      </div>
+                      <div class="remaining">
+                        <h5> الاجمالى: {{incomorder.total2}}</h5>
+                      </div>
+                      <div class="main_paid">
+                        <h5>تم دفع: {{incomorder.paid}}</h5>
+                      </div>
+                      <div class="still">
+                        <h5>مازال: {{incomorder.still}}</h5>
+                      </div>
+                  </div>
+                    
+                    
+                    <button class="btn btn-info mt-5  update-incombill" hx-target="#info" hx-swap="innerHTML" hx-post="{% url 'products:update_incombill_info' incomorder.id %}" hx-swap="beforeend" hx-target="#appendformhere">
+                      تعديل بيانات الفاتوره
+                    </button>
+                    
+                  </div>
+            
+          </section>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+{% block javascript %}
+<script>
+  var incomorder_id = "{{incomorder.id}}";
+  $(".empty_the_bill").on('click',function(){
+    console.log("clicked")
+    $.ajax({
+      url:'{% url "products:empty_the_bill" %}',
+      dataType:'json',
+      data:{
+        "id":incomorder_id,
+      },
+      success:function(data){
+          $(".emptybill_temporary_div").append('<h5 class="p-1">تم تفريغ الفاتوره فى المخزن</h5>')
+          $(".empty_the_bill").addClass("d-none")
+        
+      },
+    })
+  })
+
+  $(".delete-bill").on("click", function(e){
+    e.preventDefault()
+    confirmResult = confirm("هل تريد حذف الفاتوره الوارده؟")
+    if(confirmResult){
+      window.location.href = "{% url 'products:delete_incombill' incomorder.id %}"
+    }
+
+  })
+
+</script>
+
+<!-- scroll auto to ....... -->
+<script>
+    var btn = document.querySelector(".update-bill"),
+        incombillBtn = document.querySelector(".update-incombill"),
+        editClientBtn = document.querySelector(".edit-client");
+    btn.onclick = function(){
+      var scrolltobottom = document.body.scrollHeight-260;
+      setTimeout(function(){
+        window.scrollTo(0,scrolltobottom-220)
+      },200)
+    }
+    incombillBtn.onclick = function(){
+      var scrolltobottom = document.body.scrollHeight-260;
+      setTimeout(function(){
+        window.scrollTo(0,scrolltobottom-130)
+      },200)
+    }
+
+
+
+</script>
+
+
+
+{% endblock javascript %}

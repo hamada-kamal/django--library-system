@@ -1,6 +1,5 @@
 from django import forms
 from .models import *
-from django.forms.models import inlineformset_factory
 
 
 
@@ -27,8 +26,20 @@ class QuiqLineForm(forms.ModelForm):
     class Meta:
         model = QuiqOrderLine
         fields = ('product','qty',)
+        
+
+class IncomingLineForm(forms.ModelForm):
+    class Meta:
+        model = IncomingOrderLine
+        fields = ('product','qty',)
 
 class PaidForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('paid',)
+        
+        
+class IncomInfoForm(forms.ModelForm):
+    class Meta:
+        model = IncomingOrder
+        fields = ('seller','total','remaining_money','total2','paid','still')

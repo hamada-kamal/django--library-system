@@ -38,15 +38,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'products:bills' %}" class="nav-link">
-              <!-- <i class="nav-icon fas fa-home"></i> -->
-              <i class="nav-icon fas fa-file-invoice"></i>
-              <p>
-                الفواتير
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="{% url 'products:clients' %}" class="nav-link">
               <!-- <i class="nav-icon fas fa-th"></i> -->
               <!-- <i class="nav-icon fas fa-home"></i> -->
@@ -57,6 +48,16 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{% url 'products:bills' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-home"></i> -->
+              <i class="nav-icon fas fa-file-invoice"></i>
+              <p>
+                الفواتير
+              </p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
             <a href="{% url 'products:quiqbills' %}" class="nav-link">
               <!-- <i class="nav-icon fas fa-th"></i> -->
               <i class="nav-icon fas fa-file-invoice"></i>
@@ -65,9 +66,39 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{% url 'products:incom_bills' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-th"></i> -->
+              <i class="nav-icon fas fa-file-invoice"></i>
+              <p>
+                الفواتير الوارده
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'products:ended_products' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-th"></i> -->
+              <i class="nav-icon fas fa-thermometer-empty"></i>
+              <p>
+                منتجات منتهيه 
+                {% if emptyNum > 0 %}
+                <span class="notice">{{emptyNum}}</span>
+                {% endif %}
+                  
+              </p>
+            </a>
+          </li>
 
           <li><hr class="dropdown-divider"></li>
-          
+          <li class="nav-item">
+            <a href="{% url 'products:add_product' %}" class="nav-link">
+              <!-- <i class="nav-icon fas fa-th"></i> -->
+              <i class="nav-icon fas fa-plus"></i>
+              <p>
+                اضافه منتج
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="{% url 'products:add-bill' %}" class="nav-link">
               <!-- <i class="nav-icon fas fa-th"></i> -->
@@ -86,20 +117,15 @@
               </p>
             </a>
           </li>
-
           <li class="nav-item">
-            <a href="{% url 'products:add_product' %}" class="nav-link">
+            <a href="{% url 'products:add_incombill' %}" class="nav-link">
               <!-- <i class="nav-icon fas fa-th"></i> -->
               <i class="nav-icon fas fa-plus"></i>
               <p>
-                اضافه منتج
+                انشاء فاتوره وارده
               </p>
             </a>
           </li>
-
-
-
-
 
         </ul>
       </nav>

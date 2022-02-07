@@ -23,7 +23,11 @@
                   <div class="row d-flex align-items-stretch">
 
           <div   class="col-12 p-3">
-                      <a href="{% url 'products:delete_client' client.id %}" class="btn btn-danger delete_btn product_delete">حذف العميل</a>
+            <a class="btn btn-info mb-5 bill-btn-info" href="{% url 'products:another-bill' client.id %}">
+              فاتوره جديده لهذا العميل
+            </a>
+
+            <a href="#" class="btn btn-danger delete_btn client_delete">حذف العميل</a>
                     </div>
                     <!-- بداية  -->
                     <div   class="col-12 p-3">
@@ -63,6 +67,7 @@
                               <tr class="bills_thead_row">
                                 <th scope="col">كود الفاتوره </th>
                                 <th scope="col">تاريخ الفاتوره</th> 
+                                <th scope="col">الحاله</th> 
                                 <th scope="col"> عدد العناصر </th>
                               </tr>
                             </thead>
@@ -72,6 +77,13 @@
                               <tr class="bills_table_row">
                                 <td><a href="{% url 'products:bill_details' bill.id %}">{{bill.transaction_id}}</a></td>
                                 <td><a href="{% url 'products:bill_details' bill.id %}">{{bill.date_ordered}}</a> </td>  
+                                <td><a href="{% url 'products:bill_details' bill.id %}">
+                                  {% if bill.complete %}
+                                    <i class="fas fa-check-square complete_bill"></i>
+                                    {% else %}
+                                    <i class="fas fa-check-square open_bill"></i>
+                                  {% endif %}
+                                </a> </td>  
                                 <td><a href="{% url 'products:bill_details' bill.id %}">{{bill.get_bill_count}}</a> </td>  
                               </tr>   
                               {% endfor %}
@@ -104,9 +116,15 @@
 
 {% block javascript %}
 
-
-
   <script>
     $(".bills_table .bills_table_row:odd").css("background","#d9e1f2")
+    
+    $(".client_delete").on("click",function(e){
+      e.preventDefault()
+      confirmResult = confirm("هل تريد حذف العميل ؟")
+      if(confirmResult){
+        window.location.href ="{% url 'products:delete_client' client.id %}"
+      }
+    })
   </script>
 {% endblock javascript %}

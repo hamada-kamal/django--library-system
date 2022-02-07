@@ -37,6 +37,12 @@
     },
     success:function(data){    
        $(".total-quiqbill").text(" سعر الفاتوره:"+data["quiqbill_total"])
+
+       if(!data["quiqbill_state"]){
+        $(".state").text(`مفتوحه`).css("color","#4ee14e")
+        $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>')
+      }
+
     },
     })
 
@@ -55,7 +61,13 @@
 
             $(".total-quiqbill").text("سعر الفاتوره: "+data["quiqorder_total"])
             $(".delebtn"+quiqline_id).parent().parent().hide()
+            
             }
+            if(!data["quiqbill_state"]){
+              $(".state").text(`مفتوحه`).css("color","#4ee14e")
+              $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>')
+            }
+
             
           },
         })

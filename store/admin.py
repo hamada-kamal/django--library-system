@@ -9,6 +9,10 @@ class orderLineItem(admin.TabularInline):
 class QuiqorderLineItem(admin.TabularInline):
     model = QuiqOrderLine
     extra = 0
+
+class IncomingOrderLineItem(admin.TabularInline):
+    model = IncomingOrderLine
+    extra = 0
     
 class OrderAdmin(admin.ModelAdmin):
     
@@ -22,8 +26,15 @@ class QuiqOrderAdmin(admin.ModelAdmin):
     list_display = ('transaction_id','complete','date','paid')
     inlines = [QuiqorderLineItem]
 
+
+class IncomingOrderAdmin(admin.ModelAdmin):
+
+    list_display = ('transaction_id','date','paid')
+    inlines = [IncomingOrderLineItem]
+
 admin.site.register(Product)
 admin.site.register(Client)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(QuiqOrder, QuiqOrderAdmin)
+admin.site.register(IncomingOrder, IncomingOrderAdmin)
 admin.site.register(OrderLine)

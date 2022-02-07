@@ -68,6 +68,7 @@
                             <th scope="col">فاتوره باسم </th>
                             <th scope="col">رقم الفاتوره </th>
                             <th scope="col">تاريخ الفاتوره </th>
+                            <th scope="col">الحاله</th>
                             <th scope="col"> عدد العناصر </th>
                         
                           </tr>
@@ -78,6 +79,13 @@
                             <td><a href="{% url 'products:create-line' bill.id %}">{{bill.client}}</a></td>
                             <td><a href="{% url 'products:create-line' bill.id %}">{{bill.transaction_id}}</a></td>
                             <td><a href="{% url 'products:create-line' bill.id %}">{{bill.date_ordered}}</a></td>
+                            <td><a href="{% url 'products:create-line' bill.id %}">
+                              {% if bill.complete %}
+                                <i class="fas fa-check-square complete_bill"></i>
+                                {% else %}
+                                <i class="fas fa-check-square open_bill"></i>
+                              {% endif %}
+                            </a></td>
                             <td><a href="{% url 'products:create-line' bill.id %}">{{bill.get_bill_count}}</a> </td>  
                             <!-- <td><a href="{{bill.get_absolute_url}}">{{bill.client}}</a></td>
                             <td><a href="{{bill.get_absolute_url}}">{{bill.transaction_id}}</a></td> -->

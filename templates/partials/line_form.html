@@ -12,7 +12,7 @@
         
         <button hx-get="{% url 'products:detail-line' line.id %}" type="button"
         class="btn edit-cancel">
-        Cancel
+        تراجع
         </button>
         {% else %}
          <button hx-post="." class="btn btn-info ">اضافه</button>  
@@ -26,16 +26,24 @@
     </form>
 </div>
 
+{% if product_qty_available >= 0 %}
+<div  class="alert not_enough_alert text-left" role="alert">
+    <h5>كميه المنتج لا تكفى</h5>
+    يتوفر ( {{product_qty_available}} ) قطعه      
+    <a href="#" data-dismiss="alert" class="close close-x" aria-label="close">x</a>
+</div>
+{% endif %}
+    
 
 
 <!-- cancel adding new line form -->
 <script>
+    //setTimeout(function(){ $(".alert").hide()}, 5000)
+
     $(".btn-hide-new-line-form").on("click",function(){
         $(this).parent().parent().hide()
     })
 </script>
-
-
 
 
 

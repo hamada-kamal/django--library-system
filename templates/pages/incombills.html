@@ -16,9 +16,9 @@
         </li>
       </ul>
       <!-- SEARCH Products NAME & CODE FORM -->
-      <form class="form-inline ml-3" action="{% url 'products:quiqbills' %}">
+      <form class="form-inline ml-3" action="{% url 'products:incom_bills' %}">
         <div class="input-group">
-          <input id="searchIdforquiqbills" class="form-control form-control-navbar" name="search_quiqbills" type="search" placeholder="البحث فى الفواتير..." aria-label="Search">
+          <input id="searchIdforincombills" class="form-control form-control-navbar" name="search_incombills" type="search" placeholder="البحث فى الفواتير..." aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-navbar" type="submit">
               <i class="fas fa-search"></i>
@@ -43,7 +43,7 @@
 
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>الفواتير السريعه</h1>
+            <h1> الفواتير الوارده</h1>
           </div>
 
         </div>
@@ -58,35 +58,42 @@
                     <div   class="col-12 p-3">
                         
                       
-                      {% if quiqbills %}
+                      {% if incombills %}
                         
                       
                         
                       <table class="table table-bordered text-center bills_table">
                         <thead>
                           <tr class="bills_thead_row">
+                            <th scope="col">فاتوره باسم </th>
                             <th scope="col">رقم الفاتوره </th>
                             <th scope="col">تاريخ الفاتوره </th>
-                            <th scope="col">الحاله</th>
+                            <th scope="col">حاله الفاتوره </th>
                             <th scope="col"> عدد العناصر </th>
                         
                           </tr>
                         </thead>
                         <tbody>
-                          {% for quiqbill in quiqbills %}
+                          {% for incombill in incombills %}
                           <tr class="bills_table_row">
-                            <td><a href="{% url 'products:create_quiqline' quiqbill.id %}">{{quiqbill.transaction_id}}</a></td>
-                            <td><a href="{% url 'products:create_quiqline' quiqbill.id %}">{{quiqbill.date}}</a></td>
-                            <td><a href="{% url 'products:create_quiqline' quiqbill.id %}">
-                              {% if quiqbill.complete %}
+                            <td><a href="{% url 'products:create_incomline' incombill.id %}">
+                              {% if incombill.seller %}
+                              {{incombill.seller}}
+                              {% else %}
+                                لا يوجد
+                              {% endif %}
+                              
+                            </a></td>
+                            <td><a href="{% url 'products:create_incomline' incombill.id %}">{{incombill.transaction_id}}</a></td>
+                            <td><a href="{% url 'products:create_incomline' incombill.id %}">{{incombill.date}}</a></td>
+                            <td><a href="{% url 'products:create_incomline' incombill.id %}">
+                              {% if incombill.empty_done %}
                                 <i class="fas fa-check-square complete_bill"></i>
                                 {% else %}
-
                                 <i class="fas fa-check-square open_bill"></i>
-
                               {% endif %}
                             </a></td>
-                            <td><a href="{% url 'products:create_quiqline' quiqbill.id %}">{{quiqbill.get_bill_count}}</a> </td>  
+                            <td><a href="{% url 'products:create_incomline' incombill.id %}">{{incombill.get_bill_count}}</a> </td>  
                             <!-- <td><a href="{{bill.get_absolute_url}}">{{bill.client}}</a></td>
                             <td><a href="{{bill.get_absolute_url}}">{{bill.transaction_id}}</a></td> -->
                             
@@ -98,7 +105,7 @@
                         </tbody>
                       </table>
                       {% else %}
-                      <h4 class="m-5">لا توجد فواتير فى الوقت الحالى .</h4>
+                      <h4 class="m-5">لا توجد فواتير وارده فى الوقت الحالى .</h4>
                       {% endif %}
                     </div>
                      <!-- نهاية  -->

@@ -45,7 +45,7 @@ color: white;
   width: 220px;
 }
 .product_name{
-  color: #474343;
+  color: #000000 !important;
     font-weight: 500;
 }
 
@@ -143,10 +143,7 @@ width: 70px;
 
 
 /* products page */
-.product_code{
-  letter-spacing: 5px;
-  /* text-decoration: underline; */
-}
+
 
 .bills_table a, .products_table a, .clients_table a{
   color: rgb(67 65 65);
@@ -214,4 +211,75 @@ font-weight: 400;
 .dropdown-divider {
 
   border-top: 1px solid #4b545c;
+}
+
+
+.state_icon i{
+  opacity: 0.4;
+}
+
+
+.notice{
+  background: red;
+  position: fixed;
+  width: 28px;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: 6px;
+  color: #FFF;
+  padding-bottom: 2px;
+}
+
+
+/* message */
+
+.product_found_alert{
+  position: fixed;
+  bottom: 15px;
+  right: 58px;
+  width: 385px;
+  z-index: 2000;
+  color: #201f1f;
+  background: #f9e6e8;
+  border: 1px solid #d10909;
+}
+.product_found_alert a{
+  color: #d10909 !important;
+  opacity: 1 !important;
+  text-decoration: none;
+  font-weight: 600;
+
+}
+
+.not_enough_alert{
+  position: fixed;
+  bottom: 15px;
+  right: 58px;
+  width: 385px;
+  z-index: 2000;
+  color: #201f1f;
+  background: #f9e6e8;
+  border: 1px solid #d10909;
+}
+.not_enough_alert a{
+  position: absolute;
+  left: 15px;
+  bottom: 28px;
+  opacity: 1 !important;
+  text-decoration: none;
+  color: #d10909 !important;
+  font-size: 23px;
+  font-weight: 600;
+
+}
+
+.complete_bill{
+  color: #1ae51a;
+  font-size: 20px;
+  margin-top: 6px;
+}
+.open_bill{
+  color: #d10909;
+  font-size: 20px;
+  margin-top: 6px;
 }

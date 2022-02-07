@@ -17,11 +17,31 @@
 
                     <h6>رقم الفاتوره:  {{quiqorder.transaction_id}}</h6>
                     <h6>التاريخ:  {{quiqorder.date}}</h6>
+                    <h6>حاله الفاتوره:  
+                      {% if quiqorder.complete %}
+                      <span class="bill_state">
+                        <span class="state">
+                          مغلقه
+                        </span>
+                        <small class="state_icon"><i class="fas fa-lock"></i></small>
+                      </span>
+                        
+                        {% else %}
+                      
+                        <span class="bill_state">
+                          <span class="state" style="color: #4ee14e;">
+                            مفتوحه
+                          </span>
+                          <small class="state_icon"><i class="fas fa-lock-open"></i></small>
+                        </span>
+                        
+                        {% endif %}
+                    </h6> 
                     <hr>
                     
                     
                     <a class="btn btn-info mb-5 bill-btn-info" href="{% url 'products:print_quiqbill' quiqorder.id %}">
-                      طباعه الفاتوره
+                      تقفيل الفاتوره
                     </a> 
                     
                     <a class="btn btn-info mb-5 bill-btn-info delete-bill" href="#">
@@ -108,9 +128,7 @@
     if(confirmResult){
       window.location.href = '{% url "products:delete_quiqbill" quiqorder.id %}'
     }
-    else{
-      console.log("cancel deleting")
-    }
+
   })
 
   // Payment
@@ -151,8 +169,9 @@
     var btn = document.querySelector(".update-bill"),
         editClientBtn = document.querySelector(".edit-client");
     btn.onclick = function(){
+      var scrolltobottom = document.body.scrollHeight-200;
       setTimeout(function(){
-        window.scrollTo(0,document.body.scrollHeight)
+        window.scrollTo(0,scrolltobottom-220)
       },200)
     }
 /*    editClientBtn.onclick = function(){

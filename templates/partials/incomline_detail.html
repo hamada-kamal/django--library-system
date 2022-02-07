@@ -1,0 +1,21 @@
+{% load static %}
+        <tr hx-target="this" hx-swap="outerHTML">
+              
+            <td scope="col" class="updatebtn"><button hx-post="{% url 'products:update_incomline' incomline.id %}" class="btn btn-info">تعديل</button></td>
+
+            <td scope="col" class="table_title">{{incomline}} </td>
+            <td scope="col" class="qty">{{incomline.qty}}</td>
+
+
+            
+            <td scope="col" class="deletebtn"><button hx-post="{% url 'products:delete_incomline' incomline.id %}" class="btn btn-info"><i class="fas fa-trash"></i></button></td>
+        </tr>
+        
+        
+
+
+
+
+
+
+

@@ -12,7 +12,6 @@ class Product(models.Model):
     wholesale_price = models.DecimalField(max_digits=7  , decimal_places=2 , verbose_name="سعر الجملة")
     available_in_ventory = models.PositiveIntegerField(verbose_name='متوفر')
     discription = models.TextField(max_length=200, blank=True, null=True, verbose_name="الوصف")
-    # count_sold = models.IntegerField(default=0, verbose_name='تم بيع')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الانشاء")
     code = models.CharField(max_length=100, null=True)
     PROslug = models.SlugField(blank=True, null=True, unique=True, allow_unicode=True, max_length=255 , verbose_name="slug")
@@ -48,7 +47,6 @@ class Order(models.Model):
     client = models.ForeignKey(Client,on_delete=models.CASCADE, verbose_name="العميل")
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
-    end_bill = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True)
     remaining_atthattime = models.DecimalField(max_digits=7  , decimal_places=2 , verbose_name="المبلغ المتبقى وقتها")
 
@@ -77,29 +75,14 @@ class Order(models.Model):
         total = sum([item.get_total for item in orderitems])
         return total 
     
-    @property
-    def get_bill_benefits(self):
-        orderitems = self.orderline_set.all()
-        bill_benefits = sum([item.get_benefits for item in orderitems])
-        return bill_benefits 
-
-    @property
-    def bill_sold_items(self):
-        orderitems = self.orderline_set.all()
-        sold_count = sum([item.product_sold for item in orderitems])
-        return sold_count 
 
     def __str__(self):
         return str(self.transaction_id)
  
-    # def get_absolute_url(self):
-    #     return reverse("products:bill_details", kwargs={"slug": self.ORDslug})
-    
     
 class QuiqOrder(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
-    end_bill = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True)
     paid = models.FloatField(validators=[MinValueValidator(0)],verbose_name="تم دفع")
     ORDslug = models.SlugField(blank=True, null=True, unique=True, allow_unicode=True, max_length=255 , verbose_name="slug")
@@ -121,25 +104,12 @@ class QuiqOrder(models.Model):
         orderitems = self.quiqorderline_set.all()
         total = sum([item.get_total for item in orderitems])
         return total 
-    
-    @property
-    def get_bill_benefits(self):
-        orderitems = self.quiqorderline_set.all()
-        bill_benefits = sum([item.get_benefits for item in orderitems])
-        return bill_benefits 
 
-    @property
-    def bill_sold_items(self):
-        orderitems = self.quiqorderline_set.all()
-        sold_count = sum([item.product_sold for item in orderitems])
-        return sold_count 
 
     def __str__(self):
         return str(self.transaction_id)
  
-    # def get_absolute_url(self):
-    #     return reverse("products:bill_details", kwargs={"slug": self.ORDslug})
-    
+
     
 
 class OrderLine(models.Model):
@@ -156,11 +126,6 @@ class OrderLine(models.Model):
         total = self.product.price * self.qty
         return total
     
-    @property
-    def get_benefits(self):
-        benefits = (self.product.price - self.product.wholesale_price) * self.qty
-        return benefits
-
     
     def __str__(self):
 	    return str(self.product)           
@@ -180,17 +145,58 @@ class QuiqOrderLine(models.Model):
         total = self.product.price * self.qty
         return total
     
+    def __str__(self):
+	    return str(self.product)           
+
+    
+    
+ 
+ 
+class IncomingOrder(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    transaction_id = models.CharField(max_length=100, null=True)
+    seller = models.CharField(max_length=100, null=True,verbose_name="التاجر")
+    total = models.FloatField(validators=[MinValueValidator(0)],verbose_name="سعر الفاتوره", default=0)
+    remaining_money = models.FloatField(validators=[MinValueValidator(0)],verbose_name="رصيد ما قبله", default=0)
+    total2 = models.FloatField(validators=[MinValueValidator(0)],verbose_name="الاجمالى", default=0)
+    paid = models.FloatField(validators=[MinValueValidator(0)],verbose_name="تم دفع", default=0)
+    still = models.FloatField(validators=[MinValueValidator(0)],verbose_name="مازال", default=0)
+    empty_done = models.BooleanField(default=False)
+    ORDslug = models.SlugField(blank=True, null=True, unique=True, allow_unicode=True, max_length=255 , verbose_name="slug")
+
+
+    def save(self , *args  ,**kwargs ):
+        self.ORDslug = slugify(self.transaction_id,allow_unicode=True)
+        super(IncomingOrder , self).save( *args , **kwargs)
+
+
     @property
-    def get_benefits(self):
-        benefits = (self.product.price - self.product.wholesale_price) * self.qty
-        return benefits
+    def get_bill_count(self):
+        orderitems = self.incomingorderline_set.all()
+        count = orderitems.count()
+        return count 
 
 
+    def __str__(self):
+        return str(self.transaction_id)
+    
+    
+class IncomingOrderLine(models.Model):
+    product = models.ForeignKey(Product,null=False, blank=False,on_delete=models.CASCADE, verbose_name="المنتج")
+    incomingorder = models.ForeignKey(IncomingOrder,on_delete=models.CASCADE)
+    qty = models.PositiveIntegerField(default=1, null=False, blank=False, verbose_name="الكميه")
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["product"]
+        
+    @property
+    def get_total(self):
+        total = self.product.price * self.qty
+        return total
+    
     
     def __str__(self):
 	    return str(self.product)           
     
     
-    
-    
- 

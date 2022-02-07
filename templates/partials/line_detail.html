@@ -25,6 +25,7 @@
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 {% block javascript %}
 <!-- get bill total -->
+
   <script>
 
     var order_id = "{{line.order.id}}";
@@ -43,6 +44,10 @@
                 $(".client_remaining").text("رصيد ما قبله: " + data["client_remaining"])
                 $(".total2").text(t2)
                 $(".still").text(still)
+                if(!data["bill_state"]){
+                  $(".state").text(`مفتوحه`).css("color","#4ee14e")
+                  $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>') 
+                }
               }
               else{
                 var t2 = parseFloat(data["client_remaining"].replace(",",".")) + parseFloat(data["bill_total"].replace(",",".")),
@@ -51,6 +56,11 @@
                 $(".total2").text(t2)
                 $(".client_remaining").text("رصيد ما قبله: " + data["client_remaining"])
                 $(".still").text(still)
+                if(!data["bill_state"]){
+                  $(".state").text(`مفتوحه`).css("color","#4ee14e")
+                  $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>')
+                }
+                
               }
     },
   })
@@ -78,6 +88,10 @@
           // still = total2 - bill paid
           $(".still").text(data["still"])
           $(".total-bill").text("سعر الفاتوره: "+data["order_total"])
+          if(!data["bill_state"]){
+            $(".state").text(`مفتوحه`).css("color","green")
+            $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>')
+          }
           $(".delebtn"+line_id).parent().parent().hide()
           }
           

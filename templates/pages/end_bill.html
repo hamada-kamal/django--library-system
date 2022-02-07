@@ -66,7 +66,7 @@
                       <h6 class="total-bill"> سعر الفاتوره: {{bill.get_bill_total}}</h6>
                     </div>
                     <div class="remaining">
-                      <h6 class="client_remaining"> رصيد ما قبله:  {{bill.client.remaining_money}}</h6>
+                      <h6 class="client_remaining"> رصيد ما قبله:  {{bill.remaining_atthattime}}</h6>
                     </div>
 
                     <div class="total+2">
@@ -82,11 +82,11 @@
                     <div class="seller_info"> 
                       <table class="table_seller_info">
                         <tr>
-                          <td>اداره: </td>
+                          <td>إدارة أ/  </td>
                           <td>احمد حميده</td>
                         </tr>
                         <tr>
-                          <td>الهاتف: </td>
+                          <td>الهاتف/ </td>
                           <td class="disc">01285487545</td>
                         </tr>
                       </table>
@@ -136,7 +136,34 @@
 
 
     $(".print-btn").on("click" ,function(){
-      console.log(b_id)
+      var bill_state = "{{bill.complete}}"
+      if(bill_state==="False"){
+        confirmResult = confirm(`
+        سيتم تقفيل الفاتوره ؟
+
+        انتبه: 
+        فى حاله غلق الفاتوره سيتم تحديث المبلغ المتبفى على العميل تلقائيا
+        `)
+        if(confirmResult){
+          $(this).css("display" , "none")
+
+          $.ajax({
+            url:"{% url 'products:end_bill' %}",
+            dataType:"json",
+            data:{
+              "id":b_id,
+            },
+            success:function(data){
+            },
+          })
+  
+          window.print()
+          $(this).css("display" , "inline")
+          window.location.href = "{% url 'products:create-line' bill.id %}" 
+        }
+
+      }
+      else{
         $(this).css("display" , "none")
 
         $.ajax({
@@ -150,9 +177,12 @@
         })
 
         window.print()
-
         $(this).css("display" , "inline")
         window.location.href = "{% url 'products:create-line' bill.id %}" 
+      }
+
+
+
     })
 
 

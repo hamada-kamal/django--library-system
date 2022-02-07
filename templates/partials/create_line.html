@@ -22,14 +22,27 @@
 
                     <h6>رقم الفاتوره:  {{order.transaction_id}}</h6>
                     <h6>التاريخ:  {{order.date_ordered}}</h6>
-                    {% comment %} <h6>حاله الفاتوره:  
+                    <h6>حاله الفاتوره:  
+
                       {% if order.complete %}
-                        <span class="text-warning">مغلقه</span>
-                      {% else %}
-                        <span class="text-success">مفتوحه</span>
-                      {% endif %}
+                      <span class="bill_state">
+                        <span class="state">
+                          مغلقه
+                        </span>
+                        <small class="state_icon"><i class="fas fa-lock"></i></small>
+                        </span>
+                        
+                        {% else %}
                       
-                    </h6> {% endcomment %}
+                        <span class="bill_state">
+                          <span class="state" style="color: #4ee14e;">
+                            مفتوحه
+                          </span>
+                          <small class="state_icon"><i class="fas fa-lock-open"></i></small>
+                        </span>
+                        
+                        {% endif %}
+                    </h6> 
                     <hr>
                     <button class="btn btn-info mb-5 bill-btn-info edit-client"  hx-target="#client-info" hx-swap="innerHTML" hx-post="{% url 'products:user-bill-form' order.id %}">
                       تعديل بيانات العميل
@@ -61,8 +74,7 @@
                         <tbody id="appendformhere">
      
                                 {% for line in lines %}
-                                  {% include "partials/line_detail.html" %}
-
+                                  {% include "partials/line_detail.html" %}                                  
                                 {% endfor %}
                           
                         </tbody>
@@ -83,7 +95,7 @@
                       <h6 class="total-bill"> سعر الفاتوره: {{order.get_bill_total}}</h6>
                     </div>
                     <div class="remaining">
-                      <h6 class="client_remaining"> رصيد ما قبله:  {{order.client.remaining_money}}</h6>
+                      <h6 class="client_remaining"> رصيد ما قبله:  {{order.remaining_atthattime}}</h6>
                     </div>
 
                     <div class="total+2">
@@ -96,10 +108,10 @@
                       <h6>مازال:  <span class="still"></span></h6>
                     </div>
                     <hr>
-                    <!-- <div class="remaining_atthattime">
-                      <small> رصيد ما قبله(قبل هذه الفاتوره):  {{order.remaining_atthattime}}</small>
-                    </div> -->
                     <div class="remaining_atthattime">
+                      <small> الرصيد المتبفى على العميل قبل انشاء هذه الفاتوره:  {{order.remaining_atthattime}}</small>
+                    </div>
+                    <div class="payment">
                         <form>
                           <label class="paid_erorr"></label>
                           <input class="paid_value form-control mb-3" type="number" placeholder="الدفع">
@@ -128,7 +140,7 @@
       bill_paid = "{{order.paid}}",
       fbill_paid = parseFloat(bill_paid.replace(",", ".")),
       t = "{{order.get_bill_total}}",
-      cr = "{{order.client.remaining_money}}",
+      cr = "{{order.remaining_atthattime}}",
       t2 = parseFloat(t.replace(",", ".")) + parseFloat(cr.replace(",", ".")),
       p = "{{order.paid}}",
       still =  t2 - parseFloat(p.replace(",", "."));
@@ -143,9 +155,7 @@
     if(confirmResult){
       window.location.href = "{% url 'products:delete-bill' order.id %}"
     }
-    else{
-      console.log("cancel deleting")
-    }
+
   })
 
   // Payment
@@ -187,14 +197,15 @@
     var btn = document.querySelector(".update-bill"),
         editClientBtn = document.querySelector(".edit-client");
     btn.onclick = function(){
+      var scrolltobottom = document.body.scrollHeight-200;
       setTimeout(function(){
-        window.scrollTo(0,document.body.scrollHeight)
+        window.scrollTo(0,scrolltobottom-400)
       },200)
     }
     editClientBtn.onclick = function(){
         window.scrollTo({
           top:0,
-          behavior:"smooth",        
+          behavior:"smooth",         
         })
     }
 </script>

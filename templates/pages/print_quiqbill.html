@@ -67,14 +67,14 @@
                       <h6>تم دفع:  {{quiqbill.paid}}</h6>
                     </div>
                     
-                    <div class="seller_info">
+                    <div class="seller_info"> 
                       <table class="table_seller_info">
                         <tr>
-                          <td>اداره: </td>
+                          <td>إدارة أ/  </td>
                           <td>احمد حميده</td>
                         </tr>
                         <tr>
-                          <td>الهاتف: </td>
+                          <td>الهاتف/ </td>
                           <td class="disc">01285487545</td>
                         </tr>
                       </table>
@@ -93,15 +93,40 @@
   </div>
 
 {% endblock %}
-
+ 
 {% block javascript %}
 <script>
-
-
+    var quiqbill_id = "{{quiqbill.id}}";
+    
     $(".print-btn").on("click" ,function(){
-        $(this).css("display" , "none")
-        window.print()
-        $(this).css("display" , "inline")
+      var bill_state = "{{quiqbill.complete}}";
+      
+        if(bill_state==="False"){
+          confirmResult = confirm(`
+          سيتم تقفيل الفاتوره ؟
+          `)
+          if(confirmResult){
+            $(this).css("display" , "none")
+            $.ajax({
+              url:"{% url 'products:end_quiqbill' %}",
+              dataType:"json",
+              data:{
+                "id":quiqbill_id
+              },
+              success:function(data){},
+            })
+            window.print()
+            $(this).css("display" , "inline")
+            window.location.href = "{% url 'products:create_quiqline' quiqbill.id %}"
+          }
+        }
+        else{
+          $(this).css("display" , "none")
+          window.print()
+          $(this).css("display" , "inline")
+          window.location.href = "{% url 'products:create_quiqline' quiqbill.id %}"
+        }
+
     })
 
 
