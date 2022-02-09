@@ -57,22 +57,19 @@
                             <th scope="col">سعر البيع</th>
                             <th scope="col">الجمله</th>
                             <th scope="col">متوفر</th>
-                            <!-- <th scope="col">تم بيع</th> -->
-                            <!-- <th scope="col">اضف الى فاتوره</th> -->
+                            <th scope="col"></th>
+                       
                           </tr> 
                         </thead>
                         <tbody>
                           {% for product in products %}
                           <tr class="products_table_row">
-                            <th scope="row" class="product_code">{{product.code}}</th>
+                            <th scope="row" class="product_code"><a class="product_name" href="{{ product.get_absolute_url }}">{{product.code}}</a></th>
                             <td><a class="product_name" href="{{ product.get_absolute_url }}">{{product}}</a></td>
-                            <td>{{product.price}}</td>
-                            <td>{{product.wholesale_price}}</td>
-                            <td>{{product.available_in_ventory}}</td>
-                            <!-- <td>{{product.count_sold}}</td> -->
-                            <!-- <td>
-                              <button type="button" class="btn btn-success"><i class="fas fa-cart-plus"></i></button>
-                            </td> -->
+                            <td><a class="product_name" href="{{ product.get_absolute_url }}">{{product.price}}</a></td>
+                            <td><a class="product_name" href="{{ product.get_absolute_url }}">{{product.wholesale_price}}</a></td>
+                            <td><a class="product_name" href="{{ product.get_absolute_url }}">{{product.available_in_ventory}}</a></td>
+                            <td class="deletebtn"><a data-product="{{product.id}}" href="#" class="btn delete_product_list delete_product_list{{product.id}}"><i class="fas fa-trash"></i></a></td>
                           </tr>
 
                           {% endfor %}
@@ -112,11 +109,27 @@
 
 <script>
     $(".products_table .products_table_row:odd").css("background","#d9e1f2")
-/*    .hover(function(){
-      $(this).css("background","#1ac77d")})
-    .mouseleave(function(){
-      $(this).css("background","#b3bfb6")
-    })*/
+    
+    $(".delete_product_list").on("click",function(e){
+      e.preventDefault()
+      var id = $(this).data("product")
+      
+      confirmResult = confirm("هل تريد حذف المنتج ؟")
+      if(confirmResult){
+        $.ajax({
+          url:"{% url 'products:delete_products_list' %}",
+          dataType:"json",
+          data:{
+            "id":id,
+          },
+          success:function(data){
+            $(".delete_product_list"+id).parent().parent().hide()
+            console.log("done deeelete")
+            
+          },
+        }) 
+      }
+    })
   </script>
 
 

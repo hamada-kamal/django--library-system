@@ -67,6 +67,7 @@
                             <th scope="col"> الاسم </th>
                             <th scope="col">رقم العميل </th>
                             <th scope="col">  </th>
+                            <th scope="col">  </th>
                         
                           </tr>
                         </thead>
@@ -76,10 +77,8 @@
                             <td><a href="{% url 'products:show-client' client.id %}">{{client.id}}</a></td>
                             <td><a href="{% url 'products:show-client' client.id %}">{{client}}</a></td>
                             <td><a href="{% url 'products:show-client' client.id %}">{{client.phone}}</a></td>
-                            <td><a href="{% url 'products:another-bill' client.id %}"> + فاتوره جديده </a></td>
-                            <!-- <td><a href="{{bill.get_absolute_url}}">{{bill.client}}</a></td>
-                            <td><a href="{{bill.get_absolute_url}}">{{bill.transaction_id}}</a></td> -->
-                            
+                            <td><a class="text-success" href="{% url 'products:another-bill' client.id %}"> + فاتوره جديده </a></td>
+                            <td class="deletebtn"><a data-product="{{client.id}}" href="#" class="btn delete_client_list delete_client_list{{client.id}}"><i class="fas fa-trash"></i></a></td>
                           </tr>
                       
 
@@ -116,10 +115,26 @@
 {% block javascript %}
   <script>
     $(".clients_table .clients_table_row:odd").css("background","#d9e1f2")
-/*    .hover(function(){
-      $(this).css("background","#1ac77d")})
-    .mouseleave(function(){
-      $(this).css("background","#b3bfb6")
-    })*/
+    
+    $(".delete_client_list").on("click",function(e){
+      e.preventDefault()
+      var id = $(this).data("product")
+      
+      confirmResult = confirm("هل تريد حذف العميل ؟")
+      if(confirmResult){
+        $.ajax({
+          url:"{% url 'products:delete_clients_list' %}",
+          dataType:"json",
+          data:{
+            "id":id,
+          },
+          success:function(data){
+            $(".delete_client_list"+id).parent().parent().hide()
+            console.log("done deeelete")
+            
+          },
+        }) 
+      }
+    })
   </script>
 {% endblock javascript %}

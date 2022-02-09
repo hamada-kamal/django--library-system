@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  
+    <div style="direction: rtl;" class="wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div   class="content-wrapper p-5">
+        <!-- Content Header (Page header) -->
+
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <h3>بياناتى</h3>
+                  </div>
+   
+                </div>
+            </section>
+        
+            <!-- Main content -->
+            <section class="content">                  
+              <!-- Default box -->
+              <div class="card card-solid">
+                  <div class="row d-flex align-items-stretch">
+
+                    <!-- بداية  -->
+                    <div   class="col-12 p-3">
+                        
+                        <table id="about_table" class="table table-success table-details">
+                            
+                            <tbody>
+                              <tr>
+                                <th scope="row"><h4>الاسم</h4></th>
+                                <td><h5>{{about.name}}</h5> </td>  
+                              </tr>
+                           
+                              <tr>
+                                <th scope="row"> <h4>رقم الهاتف 1</h4></th>
+                                <td><h5>
+                                    {% if about.phone1 %}
+                                    {{about.phone1}}
+                                    {% else %}
+                                    <h5>لا يوجد</h5>
+                                    {% endif %}
+                                </h5></td>
+                              </tr>
+
+                              <tr>
+                                <th scope="row"><h4>رقم الهاتف 2</h4></th>
+                                <td><h5>
+                                    
+                                    {% if about.phone2 %}
+                                    {{about.phone2}}
+                                    {% else %}
+                                    <h5>لا يوجد</h5>
+                                    {% endif %}
+                                        
+                                </h5></td>
+                              </tr>
+                              
+                           
+                            </tbody>
+                          </table>
+                    </div>
+                     <!-- نهاية  -->
+                     <div   class="col-12 p-3">
+                        <button class="btn btn-info mb-5 about_edit_btn " hx-post="{% url 'products:edit_about' %}" hx-target="#about_table" hx-swap="outerHTML">
+                        تحديث البيانات
+                        </button>
+                    </div>                   
+                    </div>
+                
+               
+                
+          
+                
+  
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+        
+            </section>
+            <!-- /.content -->
+          </div>
+          <!-- /.content-wrapper -->
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+  
+{% endblock %}
+
+
+{% block javascript %}
+
+  <script>
+    $(".about_edit_btn").on("click",function(){
+        $(this).addClass("d-none")
+    })
+  </script>
+{% endblock javascript %}

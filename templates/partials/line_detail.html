@@ -27,7 +27,7 @@
 <!-- get bill total -->
 
   <script>
-
+ 
     var order_id = "{{line.order.id}}";
     //to update the (total & total2 & still) when user remaining change in bill page 
   $.ajax({
@@ -46,7 +46,7 @@
                 $(".still").text(still)
                 if(!data["bill_state"]){
                   $(".state").text(`مفتوحه`).css("color","#4ee14e")
-                  $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>') 
+                  $(".state_icon .fa-lock").replaceWith('<i class="fas fa-lock-open"></i>') 
                 }
               }
               else{
@@ -58,7 +58,7 @@
                 $(".still").text(still)
                 if(!data["bill_state"]){
                   $(".state").text(`مفتوحه`).css("color","#4ee14e")
-                  $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>')
+                  $(".state_icon .fa-lock").replaceWith('<i class="fas fa-lock-open"></i>')
                 }
                 
               }
@@ -89,8 +89,8 @@
           $(".still").text(data["still"])
           $(".total-bill").text("سعر الفاتوره: "+data["order_total"])
           if(!data["bill_state"]){
-            $(".state").text(`مفتوحه`).css("color","green")
-            $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>')
+            $(".state").text(`مفتوحه`).css("color","#4ee14e")
+            $(".state_icon .fa-lock").replaceWith('<i class="fas fa-lock-open"></i>')
           }
           $(".delebtn"+line_id).parent().parent().hide()
           }

@@ -2,9 +2,17 @@ from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
 
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
 
 
+
+class About(models.Model):
+    name = models.CharField(max_length=56, verbose_name="الاسم",unique=True)
+    phone1 = models.CharField(max_length=11, blank=True, null=True , verbose_name="رقم الهاتف 1")
+    phone2 = models.CharField(max_length=11, blank=True, null=True, verbose_name="رقم الهاتف 2")
+
+    def __str__(self):
+        return self.name
 
 class Product(models.Model):
     name = models.CharField(max_length=56, verbose_name="اسم المنتج",unique=True)

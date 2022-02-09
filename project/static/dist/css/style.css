@@ -1,11 +1,14 @@
 .btn , button{
   border-radius: 0;
 }
+.input-group input[type="search"] {
+  width: 300px;
+}
 .user-name{
     color: #d6d8d9;
 }
 .hero-image {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("spices.jpeg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
     
     height: 50%;
     
@@ -46,7 +49,8 @@ color: white;
 }
 .product_name{
   color: #000000 !important;
-    font-weight: 500;
+  font-weight: 500;
+  font-size: 19px;
 }
 
 .delete_btn{
@@ -138,7 +142,8 @@ width: 70px;
   overflow-y: scroll;
   overflow-x: hidden;
   background: #FFF;
-  width: 202px !important;
+  width: 300px !important;
+  color: #434a53;
 }
 
 
@@ -209,13 +214,12 @@ font-weight: 400;
 
 
 .dropdown-divider {
-
   border-top: 1px solid #4b545c;
 }
 
 
-.state_icon i{
-  opacity: 0.4;
+.state_icon .fa-lock-open, .state_icon .fa-lock{
+  opacity: 0.4 ;
 }
 
 
@@ -242,6 +246,7 @@ font-weight: 400;
   color: #201f1f;
   background: #f9e6e8;
   border: 1px solid #d10909;
+  font-size: 18px;
 }
 .product_found_alert a{
   color: #d10909 !important;
@@ -260,6 +265,7 @@ font-weight: 400;
   color: #201f1f;
   background: #f9e6e8;
   border: 1px solid #d10909;
+  font-size: 18px;
 }
 .not_enough_alert a{
   position: absolute;
@@ -282,4 +288,15 @@ font-weight: 400;
   color: #d10909;
   font-size: 20px;
   margin-top: 6px;
+}
+
+
+.deletebtn .del_btn_list .fa-trash,
+.deletebtn .delete_bill_list .fa-trash,
+.deletebtn .delete_quiqbill_list .fa-trash,
+.deletebtn .delete_client_list .fa-trash,
+.deletebtn .delete_product_list .fa-trash
+{
+  color: #c70000;
+  font-size: 20px;
 }

@@ -1,0 +1,21 @@
+{% load crispy_forms_tags %}
+<form method="post" hx-target="this" hx-swap="outerHTML">
+    {% csrf_token %}
+    {{form|crispy}}
+        <button hx-post="{% url 'products:edit_about' %}"  class="btn btn-info about_save_btn">حفظ</button>   
+        
+        <button hx-post="{% url 'products:about_details' %}" type="button"
+        class="btn edit-cancel about_cancel_btn">
+        تراجع
+        </button>
+</form>
+
+
+{% block javascript %}
+<script>
+    $(".about_save_btn , .about_cancel_btn").on("click",function(){
+        $(".about_edit_btn").removeClass("d-none")
+    })
+</script>
+{% endblock javascript %}
+    

@@ -3,10 +3,18 @@ from .models import *
 
 
 
+class AboutForm(forms.ModelForm):
+    class Meta:
+        model = About
+        fields = ('name', 'phone1', 'phone2',)
+
+
+
 class AddProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ('name', 'price', 'wholesale_price', 'available_in_ventory','discription')
+
 
 
         

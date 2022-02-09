@@ -6,6 +6,9 @@ app_name = 'store'
 
 urlpatterns = [
     path('', views.home, name="home"),
+    path('about-me/', views.about, name="about"),
+    path('about-me/about-details/', views.about_details, name="about_details"),
+    path('about-me/edit_about/', views.edit_about, name="edit_about"),
     path('reports/', views.reports, name="reports"),
     path('products/clients/', views.clients, name="clients"),
     path('products/clients/<pk>/cdetails/', views.client_details, name="show-client"),
@@ -13,7 +16,9 @@ urlpatterns = [
     
     path('products/<str:slug>/details/', views.product_details, name="product_details"),
     path('products/<pk>/delete/', views.delete_product, name="delete_product"),
+    path('ajax_delete_products_list/', views.delete_products_list, name="delete_products_list"),
     path('clients/<pk>/delete/', views.delete_client, name="delete_client"),
+    path('ajax_delete_clients_list/', views.delete_clients_list, name="delete_clients_list"),
     path('products/add-new-product/', views.add_product, name="add_product"),
     path('products/<str:slug>/edit/', views.edit_product, name="edit_product"),
     path('products/line-form/', views.create_line_form, name="line-form"),
@@ -30,6 +35,7 @@ urlpatterns = [
     path('products/bill/<pk>/edit/', views.edit_bill_user_information, name="user-bill-form"),
     path('products/another-bill/<pk>/', views.another_bill_for_client, name="another-bill"),
     path('products/bill/<pk>/delete/', views.delete_bill, name="delete-bill"),
+    path('ajax_delete_bills_list/', views.delete_bills_list, name="delete_bills_list"),
     path('products/add-new-bill/', views.add_bill, name="add-bill"),
     path('products/bills/', views.bills, name="bills"),
     path('products/bill/<pk>/complete/', views.complete_bill, name="complete-bill"),
@@ -51,6 +57,7 @@ urlpatterns = [
     path('products/quiqbill/quiqline/delete/', views.delete_quiqline , name="delete_quiqline"),
     path('ajax_quiqbill_payment/',views.quiqbill_payment , name='quiqbill_payment'),
     path('quiqbill/<pk>/delete/',views.delete_quiqbill , name='delete_quiqbill'),
+    path('ajax_delete_quiqbills_list/',views.delete_quiqbills_list , name='delete_quiqbills_list'),
     path('products/add-new/quiqbill/',views.add_quiqbill , name='add_quiqbill'),
     path('products/quiqbill/<pk>/print/',views.print_quiqbill , name='print_quiqbill'),
     path('ajax_live_quiqbill/',views.live_quiqbill , name='live_quiqbill'),
@@ -74,6 +81,7 @@ urlpatterns = [
     path('products/add-new-incombill/', views.add_incombill, name="add_incombill"),
     path('products/incom-bill/<pk>/delete/', views.delete_incombill, name="delete_incombill"),
     path('autosearch/incoming-bills/',views.autosearch_incombills , name='autosearch_incombills'),
+    path('ajax_delete_incombill_list/',views.delete_incombill_list , name='delete_incombill_list'),
 
 
 ]

@@ -39,7 +39,7 @@
                     </h6> 
                     <hr>
                     
-                    
+                     
                     <a class="btn btn-info mb-5 bill-btn-info" href="{% url 'products:print_quiqbill' quiqorder.id %}">
                       تقفيل الفاتوره
                     </a> 
@@ -156,6 +156,10 @@
           $(".paid").text(data["quiqbill_paid"])
           $(".paid_erorr").text("تم دفع مبلغ بقيمه "+ data["quiqbill_paid"] + " ج.م").css("color","green")
           $(".paid_value").val("")
+          if(!data["quiqbill_state"]){
+            $(".state").text(`مفتوحه`).css("color","#4ee14e")
+            $(".state_icon .fa-lock").replaceWith('<i class="fas fa-lock-open"></i>')
+          }
         },
       })
     }

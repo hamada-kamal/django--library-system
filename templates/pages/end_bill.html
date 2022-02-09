@@ -83,12 +83,26 @@
                       <table class="table_seller_info">
                         <tr>
                           <td>إدارة أ/  </td>
-                          <td>احمد حميده</td>
+                          <td>{{about.name}}</td>
                         </tr>
                         <tr>
-                          <td>الهاتف/ </td>
-                          <td class="disc">01285487545</td>
+                          <td>الهاتف/  </td>
+                          
+                          {% if about.phone1 %}
+                          <td class="disc">{{about.phone1}}</td>
+                          {% else %}
+                          <td class="disc">{{about.phone2}}</td>
+                          {% endif %}
                         </tr>
+                        
+                        {% if about.phone1 != None %}
+                          {% if about.phone2 %}
+                          <tr>
+                            <td> </td>
+                            <td class="disc">{{about.phone2}}</td>
+                          </tr>
+                          {% endif %}
+                        {% endif %}
                       </table>
                     </div>
 

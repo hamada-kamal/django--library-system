@@ -3,25 +3,15 @@
 <!DOCTYPE html>
 <html  lang="ar">
 <head>
-  <!-- good color #3c5357 -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
     <title>فلاجيو</title>
-    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
-
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- Font Awesome Icons -->
-    <!-- <link rel="stylesheet" href="{% static 'plugins/jquery_datepacker/jquery_ui.css' %}"> -->
-    <!-- IonIcons -->
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
+    <link rel="icon" type="image/x-icon" href="{% static 'dist/img/favicon.ico' %}">    
+    <link rel="stylesheet" href="{% static 'dist/css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'dist/css/adminlte_ar.min.css' %}">
     <link rel="stylesheet" href="{% static 'dist/css/style.css' %}">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    
   </head>
   <body dir="rtl" class="hold-transition sidebar-mini">
 
@@ -34,22 +24,14 @@
   
 {% endblock %}
 </div>
-<!-- REQUIRED SCRIPTS -->
-<!-- <script src="{% static 'plugins/jquery_datepacker/jquery_ui.js' %}"></script> -->
 
-<!-- jQuery -->
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
-<!-- Bootstrap -->
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- AdminLTE -->
-<!-- OPTIONAL SCRIPTS -->
+{% comment %} <script src="{% static 'dist/js/demo.js' %}"></script> {% endcomment %}
+<script src="{% static 'dist/js/fontawesome-all.min.js' %}"></script>
+<script src="{% static 'plugins/jquery/jquery-ui.js' %}"></script>
+<script src="{% static 'plugins/jquery/htmx.min.js' %}"></script>
 
-
-<script src="{% static 'dist/js/demo.js' %}"></script>
-
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<!--this script nessecary for htmx-->
 <script>
   document.body.addEventListener('htmx:configRequest', (event) => {
       event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';

@@ -40,7 +40,7 @@
 
        if(!data["quiqbill_state"]){
         $(".state").text(`مفتوحه`).css("color","#4ee14e")
-        $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>')
+        $(".state_icon .fa-lock").replaceWith('<i class="fas fa-lock-open"></i>')
       }
 
     },
@@ -65,7 +65,7 @@
             }
             if(!data["quiqbill_state"]){
               $(".state").text(`مفتوحه`).css("color","#4ee14e")
-              $(".state_icon i").replaceWith('<i class="fas fa-lock-open"></i>')
+              $(".state_icon .fa-lock").replaceWith('<i class="fas fa-lock-open"></i>')
             }
 
             

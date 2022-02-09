@@ -70,6 +70,7 @@
                             <th scope="col">تاريخ الفاتوره </th>
                             <th scope="col">الحاله</th>
                             <th scope="col"> عدد العناصر </th>
+                            <th scope="col"> </th>
                         
                           </tr>
                         </thead>
@@ -87,9 +88,8 @@
                               {% endif %}
                             </a></td>
                             <td><a href="{% url 'products:create-line' bill.id %}">{{bill.get_bill_count}}</a> </td>  
-                            <!-- <td><a href="{{bill.get_absolute_url}}">{{bill.client}}</a></td>
-                            <td><a href="{{bill.get_absolute_url}}">{{bill.transaction_id}}</a></td> -->
-                            
+                            <td class="deletebtn"><a data-product="{{bill.id}}" href="#" class="btn delete_bill_list delete_bill_list{{bill.id}}"><i class="fas fa-trash"></i></a></td>
+
                           </tr>
                       
 
@@ -128,5 +128,24 @@
 
   <script>
     $(".bills_table .bills_table_row:odd").css("background","#d9e1f2")
+    $(".delete_bill_list").on("click",function(e){
+      e.preventDefault()
+      var id = $(this).data("product")
+      
+      confirmResult = confirm("هل تريد حذف الفاتوره ؟")
+      if(confirmResult){
+        $.ajax({
+          url:"{% url 'products:delete_bills_list' %}",
+          dataType:"json",
+          data:{
+            "id":id,
+          },
+          success:function(data){
+            $(".delete_bill_list"+id).parent().parent().hide()
+            
+          },
+        }) 
+      }
+    })
   </script>
 {% endblock javascript %}

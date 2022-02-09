@@ -61,6 +61,7 @@
                     <div class="row d-flex align-items-stretch">
                       <!-- بداية  -->
                       <div   class="col-12 p-3">
+                        {% if client_bills %}
                         <h4>فواتير العميل</h4>
                         <table class="table table-details text-center bills_table">
                             <thead >
@@ -90,7 +91,13 @@
                                                       
                             </tbody>
                           </table>
-                      </div>
+                        {% else %}
+                          <h4 class="text-secondary">لا توجد فواتير لهذا العميل</h4>
+                        {% endif %}
+                          
+                        
+                      
+                        </div>
                       <!-- نهاية  -->
                     
                     </div>

@@ -80,7 +80,7 @@
                         </tbody>
                         
                     </table>
-                    
+                     
 
                     <!-- <div id=""></div> -->
 
@@ -158,7 +158,7 @@
 
   })
 
-  // Payment
+  $(document).ready(function(){  // Payment
   $(".paid_btn").on("click", function(e){
     e.preventDefault()
     var f = $(".paid_value").val();
@@ -184,11 +184,16 @@
           $(".paid").text(data["bill_paid"])
           $(".paid_erorr").text("تم دفع مبلغ بقيمه "+ data["bill_paid"] + " ج.م").css("color","green")
           $(".paid_value").val("")
+          if(!data["bill_state"]){
+            $(".state").text(`مفتوحه`).css("color","#4ee14e")
+            $(".state_icon .fa-lock").replaceWith('<i class="fas fa-lock-open"></i>')
+          }
         },
-      })
+      }) 
     }
     
     
+  })
   })
 </script>
 

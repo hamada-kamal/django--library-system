@@ -32,6 +32,7 @@ class IncomingOrderAdmin(admin.ModelAdmin):
     list_display = ('transaction_id','date','paid')
     inlines = [IncomingOrderLineItem]
 
+admin.site.register(About)
 admin.site.register(Product)
 admin.site.register(Client)
 admin.site.register(Order, OrderAdmin)

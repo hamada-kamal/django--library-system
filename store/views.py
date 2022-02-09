@@ -16,6 +16,24 @@ def home(request):
     return render(request, 'pages/home.html')
     
 
+def about(request):
+    about = About.objects.first()
+    return render(request, 'pages/about.html', {"about": about})
+    
+def about_details(request):
+    about = About.objects.first()
+    return render(request, 'partials/about_details.html', {"about": about})
+    
+def edit_about(request):
+    about = About.objects.first()
+    form = AboutForm(request.POST or None, instance=about)
+    if request.method=="POST":
+        if form.is_valid():
+            form.save()
+            return redirect("products:about_details");
+    return render(request, 'partials/about_form.html', {"form": form})
+    
+
 
 
 def clients(request):
@@ -114,7 +132,6 @@ def complete_bill(request,pk):
 
 def bills(request):
     search_qs = request.GET.get('search_bills', '')
-    print("iam looking for: ",search_qs)
     if search_qs:
         bills = Order.objects.filter(Q(client__name__icontains=search_qs)|
                                         Q(transaction_id__icontains=search_qs))
@@ -306,11 +323,18 @@ def payment(request):
     bill_id = request.GET.get("order_id")
     paid_value = request.GET.get("paid_value")
     bill = Order.objects.get(pk = bill_id)
+    if bill.complete == True:
+        bill.complete = False
+        bill.save()
+        bill.client.remaining_money = bill.remaining_atthattime
+        bill.client.save()
+
     total2 = bill.get_bill_total + bill.client.remaining_money
     bill.paid = float(paid_value)
     bill.save()
     data = {
         "bill_paid":bill.paid,
+        "bill_state":bill.complete,
         "still":float(total2) - float(bill.paid),
     }
     return JsonResponse(data)
@@ -340,16 +364,45 @@ def delete_bill(request,pk):
         bill.delete() 
     return redirect("products:bills")
 
+def delete_bills_list(request):
+    bill_id = request.GET.get("id")
+    bill = Order.objects.get(id=bill_id)
+    if bill.complete == True:
+        bill.delete()
+    else:
+        lines = bill.orderline_set.all()
+        for line in lines:
+            line.product.available_in_ventory += line.qty
+            line.product.save()
+        bill.delete()
+    data = {} 
+    return JsonResponse(data)
+
 def delete_product(request,pk):
     p = Product.objects.get(pk=pk)
     p.delete()
     return redirect("products:all_products")
+
+def delete_products_list(request):
+    product_id = request.GET.get("id")
+    p = Product.objects.get(id=product_id)
+    p.delete()
+    data = {} 
+    return JsonResponse(data)
 
 
 def delete_client(request,pk):
     c = Client.objects.get(pk=pk)
     c.delete()
     return redirect("products:clients")
+
+
+def delete_clients_list(request):
+    client_id = request.GET.get("id")
+    c = Client.objects.get(id=client_id)
+    c.delete()
+    data = {} 
+    return JsonResponse(data)
 
 
 def line_message(request):
@@ -401,21 +454,20 @@ def autosearch_clients(request):
     
     
     if qs:
-        print("qs: ",qs)
         name = []
         name+=[x.name for x in qs]
     else:
-        print("qs: ",qs)
         name = ['لا توجد نتائج']
     return JsonResponse(name, safe=False)
 
 
  
 def generate_bill(request,id):
+    about = About.objects.first()
     bill = Order.objects.get(id=id)
-    
     lines = bill.orderline_set.all() 
     return render(request, 'pages/end_bill.html', {
+        'about':about,
         'bill':bill,
         'lines':lines,
     })
@@ -591,10 +643,15 @@ def quiqbill_payment(request):
     quiqbill_id = request.GET.get("quiqorder_id")
     paid_value = request.GET.get("paid_value")
     quiqbill = QuiqOrder.objects.get(pk = quiqbill_id)
+    if quiqbill.complete == True:
+        quiqbill.complete = False
+        quiqbill.save()
+
     quiqbill.paid = float(paid_value)
     quiqbill.save()
     data = {
         "quiqbill_paid":quiqbill.paid,
+        "quiqbill_state":quiqbill.complete,
     }
     return JsonResponse(data)
 
@@ -610,6 +667,20 @@ def delete_quiqbill(request,pk):
             quiqline.product.save() 
         quiqbill.delete()
     return redirect("products:quiqbills")
+
+def delete_quiqbills_list(request):
+    quiqbill_id = request.GET.get("id")
+    quiqbill = QuiqOrder.objects.get(id=quiqbill_id)
+    if quiqbill.complete == True:
+        quiqbill.delete()
+    else:
+        quiqlines = quiqbill.quiqorderline_set.all()
+        for quiqline in quiqlines:
+            quiqline.product.available_in_ventory += quiqline.qty
+            quiqline.product.save() 
+        quiqbill.delete()
+    data = {}
+    return JsonResponse(data)
 
 
 def add_quiqbill(request):
@@ -631,10 +702,11 @@ def live_quiqbill(request):
 
 
 def print_quiqbill(request,pk):
+    about = About.objects.first()
     quiqbill = QuiqOrder.objects.get(pk=pk)
-    
     quiqlines = quiqbill.quiqorderline_set.all() 
     return render(request, 'pages/print_quiqbill.html', {
+        'about':about,
         'quiqbill':quiqbill,
         'quiqlines':quiqlines,
     })
@@ -775,7 +847,6 @@ def incombill_info_details(request,pk):
     return render(request,'partials/incombill_info_details.html',{"incombill":incombill})
 
 def empty_the_bill(request):
-    print("iam in---------------")
     incombill_id = request.GET.get("id")
     incombill = IncomingOrder.objects.get(id = incombill_id)
     
@@ -796,3 +867,11 @@ def delete_incombill(request,pk):
     incombill = IncomingOrder.objects.get(pk = pk)
     incombill.delete()
     return redirect("products:incom_bills")
+
+
+def delete_incombill_list(request):
+    incombill_id = request.GET.get("id")
+    incombill = IncomingOrder.objects.get(id = incombill_id)
+    incombill.delete()
+    data = {}
+    return JsonResponse(data)
